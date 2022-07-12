@@ -1,3 +1,10 @@
+### C++ ###
+*.xml
+*.txt
+*.cbp
+*.depend
+*.gitignore
+
 # Prerequisites
 *.d
 

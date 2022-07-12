@@ -1,3 +1,5 @@
+#ifndef ACCOUNTANT_H
+#define ACCOUNTANT_H
 
 #include <iostream>
 
@@ -8,3 +10,4 @@ class Accountant{
 
 
 };
+#endif
