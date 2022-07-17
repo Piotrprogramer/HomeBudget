@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class FileWithExpenses {
+class FileWithExpenses: public FileXml {
 
 
 

@@ -3,6 +3,7 @@
 *.txt
 *.cbp
 *.depend
+HomeBudget.layout
 *.gitignore
 
 # Prerequisites

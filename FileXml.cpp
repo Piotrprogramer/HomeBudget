@@ -1,8 +1,5 @@
 #include "FileXml.h"
 
-
-//FileXml::isFileEmpty(){};
-
 using namespace std;
 
 bool FileXml::isFileEmpty(){
@@ -18,3 +15,4 @@ bool FileXml::isFileEmpty(){
 string FileXml::getFileName(){
 return NAME_OF_FILE;
 };
+
