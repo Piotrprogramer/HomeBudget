@@ -11,29 +11,33 @@ FileWithIncomes::FileWithIncomes(string name_of_file, int userId): FileXml(name_
     }
 };
 
-Income FileWithIncomes::getNewIncomeData(){
+Income FileWithIncomes::getNewIncomeData() {
     char answer = {0};
     string incomeReason = "";
     double amount = 0;
     int year, month, day;
     struct tm date;
     bool isValidDate = false;
+
     cout<< "Is this income today <y / n>?" <<endl;
     do {
-            answer = AuxiliaryMethods::getChar();
-            if(answer != 'y' && answer != 'n') cout<<"There is no '"<< answer << "' option"<<endl;
-    }
-    while(answer != 'y' && answer != 'n');
-    if(answer == 'y') date = Calendar::getCurrentDate();
-    else{
-        do{
-        cout<<"Date format:  rrrr-mm-dd";
-        cout<<endl<<"Give the date: ";
-        cin>>year>>month>>day;
-        isValidDate = Calendar::isValidDate(day,month,year);
-        if(!isValidDate) cout<<"Incorrect date. Try again."<<endl<<endl;
-        }
-        while(!isValidDate);
+        answer = AuxiliaryMethods::getChar();
+        if(answer != 'y' && answer != 'n') cout<<"There is no '"<< answer << "' option"<<endl;
+    } while(answer != 'y' && answer != 'n');
+
+    if(answer == 'y') {
+        date = Calendar::getCurrentDate();
+        year = date.tm_year;
+        month = date.tm_mon;
+        day = date.tm_mday;
+    } else {
+        do {
+            cout<<"Date format:  rrrr-mm-dd";
+            cout<<endl<<"Give the date: ";
+            cin>>year>>month>>day;
+            isValidDate = Calendar::isValidDate(day,month,year);
+            if(!isValidDate) cout<<"Incorrect date. Try again."<<endl<<endl;
+        } while(!isValidDate);
     }
 
     cout<< "Enter the income reason: ";
@@ -42,7 +46,7 @@ Income FileWithIncomes::getNewIncomeData(){
 
     cout<< "Enter the amount of income: ";
     amount = AuxiliaryMethods::getDoubleTypeOfNumber();
-    Income newIncome(userId,incomeReason, amount, date.tm_year, date.tm_mon, date.tm_mday );
+    Income newIncome(userId,incomeReason, amount, year, month, day );
 
     return newIncome;
 };
@@ -50,10 +54,8 @@ Income FileWithIncomes::getNewIncomeData(){
 vector <Income> FileWithIncomes::loadIncomeFromFile() {};
 
 void FileWithIncomes::addIncome() {
-
     Income newIncome = getNewIncomeData();
-    newIncome.display();
-
+    saveIncomeToFile(newIncome);
 };
 
 void FileWithIncomes::deleteIncome() {
@@ -90,38 +92,17 @@ string FileWithIncomes::getIncome(){
 
 
 
-void FileWithIncomes::saveIncomesToFile() {
-    /*
-        CMarkup xml;
-
-        bool fileExists = xml.Load( getFileName());
-
-        if (!fileExists){
-            xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-            xml.AddElem(getFileName());
-        }
-    */
+void FileWithIncomes::saveIncomeToFile(Income income){
 // CMarkup xml;
-    xml.FindElem();
-    xml.IntoElem();
-    xml.AddElem("Income");
-    xml.IntoElem();
-    xml.AddElem("UserId", "2");
-    xml.AddElem("Date", "date");
-    xml.AddElem("Amount", "amount");
-
-    //xml.OutOfElem(); // back to level up
-
-    xml.Save(getFileName());
-    xml.ResetPos();
 
     xml.FindElem();
     xml.IntoElem();
     xml.AddElem("Income");
     xml.IntoElem();
-    xml.AddElem("UserId", "2");
-    xml.AddElem("Date", "date");
-    xml.AddElem("Amount", "amount");
+    xml.AddElem("UserId", AuxiliaryMethods::converteIntToString(userId));
+    xml.AddElem("IncomeReason", income.getIncomeReason());
+    xml.AddElem("Amount", AuxiliaryMethods::converteDoubleToString(income.getAmount()));
+    xml.AddElem("Date", income.getDate() );
 
     xml.Save(getFileName());
 

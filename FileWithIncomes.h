@@ -14,21 +14,24 @@
 using namespace std;
 
 class FileWithIncomes :public FileXml {
-    vector <Income> Incomes;
+    //vector <Income> Incomes;
     int userId;
     CMarkup xml;
-
+    Income getNewIncomeData();
+   void saveIncomeToFile(Income income);
 
 public:
-    Income getNewIncomeData();
+
 
 
     FileWithIncomes(string name_of_file, int userId);
     void addIncome();
+
+
     string getIncome();
     void deleteIncome();
 
     vector <Income> loadIncomeFromFile();
-    void saveIncomesToFile();
+    //void saveIncomesToFile();
 };
 #endif
