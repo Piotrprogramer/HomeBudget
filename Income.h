@@ -3,13 +3,13 @@
 
 #include <iostream>
 #include <time.h>
+#include "AuxiliaryMethods.h"
 
 
 using namespace std;
 
 class Income {
     double amount = 0;
-    struct tm date;
     int year, month, day;
     string incomeReason = "";
     int userId = 0;
@@ -19,7 +19,10 @@ public:
 
     double getAmount();
     string getIncomeReason();
-    tm getDate();
+    string getDate();
+    int getYear();
+    int getMonth();
+    int getDay();
 
     void setIncome(double income);
     void setDate(int year, int month, int day);

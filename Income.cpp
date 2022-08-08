@@ -13,9 +13,26 @@ double Income::getAmount() {
     return amount;
 };
 
-tm Income::getDate() {
+string Income::getDate() {
+    string date = "";
+    date = AuxiliaryMethods::converteIntToString(year);
+    date+= "|" + AuxiliaryMethods::converteIntToString(month);
+    date+= "|" + AuxiliaryMethods::converteIntToString(day);
+
     return date;
 };
+
+int Income::getYear(){
+    return year;
+}
+
+int Income::getMonth(){
+    return month;
+}
+
+int Income::getDay(){
+    return day;
+}
 
 string Income::getIncomeReason(){
     return incomeReason;
@@ -26,9 +43,9 @@ void Income::setIncome(double amount) {
 };
 
 void Income::setDate(int year, int month, int day) {
-    date.tm_mday  = day;
-    date.tm_mon  =  month;
-    date.tm_year = year;
+    this->year = year;
+    this->month = month;
+    this->day = day;
 };
 
 void Income::setIncomeReason(string incomeReason){
