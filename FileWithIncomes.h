@@ -6,12 +6,27 @@
 #include "Markup.h"
 #include "FileXml.h"
 #include "Income.h"
+#include "AuxiliaryMethods.h"
+#include "Calendar.h"
+#include <cstring>
+
 
 using namespace std;
 
 class FileWithIncomes :public FileXml {
+    vector <Income> Incomes;
+    int userId;
+    CMarkup xml;
+
+
 public:
-    FileWithIncomes(string name_of_file): FileXml(name_of_file) {};
+    Income getNewIncomeData();
+
+
+    FileWithIncomes(string name_of_file, int userId);
+    void addIncome();
+    string getIncome();
+    void deleteIncome();
 
     vector <Income> loadIncomeFromFile();
     void saveIncomesToFile();

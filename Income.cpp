@@ -1,39 +1,43 @@
 #include "Income.h"
 
-Income::Income(int userId, double amount, int year, int month, int day) {
+Income::Income(int userId,string incomeReason, double amount, int year, int month, int day) {
     this->userId = userId;
     this->amount = amount;
-
-    data.tm_sec=0;
-    data.tm_min=0;
-    data.tm_hour=0;
-    data.tm_hour=0;
-    data.tm_wday=0;
-    data.tm_yday=0;
-
-    data.tm_mday  = day;
-    data.tm_mon  =  month;
-    data.tm_year = year;
+    this->incomeReason = incomeReason;
+    this->year = year;
+    this->month = month;
+    this->day = day;
 }
 
-double Income::getIncome() {
+double Income::getAmount() {
     return amount;
 };
 
 tm Income::getDate() {
-    return data;
+    return date;
 };
+
+string Income::getIncomeReason(){
+    return incomeReason;
+}
 
 void Income::setIncome(double amount) {
     this->amount = amount;
 };
 
-void Income::setData(int year, int month, int day) {
-    data.tm_mday  = day;
-    data.tm_mon  =  month;
-    data.tm_year = year;
+void Income::setDate(int year, int month, int day) {
+    date.tm_mday  = day;
+    date.tm_mon  =  month;
+    date.tm_year = year;
 };
 
+void Income::setIncomeReason(string incomeReason){
+    this->incomeReason = incomeReason;
+}
+
 void Income::display() {
-    cout<< amount << "PLN  - " <<data.tm_year << "/" << data.tm_mon << "/" << data.tm_mday <<endl;
+    //cout<<"Kwota: "<< amount << "PLN  - " <<endl<<"Data: "<<date.tm_year << "/" << date.tm_mon << "/" << date.tm_mday <<endl;
+    cout<<"Kwota: "<< amount << "PLN  - " <<endl<<"Data: "<<year << "/" << month << "/" << day <<endl;
+    cout<<"Powod: " <<incomeReason<<endl;
+
 }

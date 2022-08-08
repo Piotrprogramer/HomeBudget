@@ -9,17 +9,21 @@ using namespace std;
 
 class Income {
     double amount = 0;
-    struct tm data;
+    struct tm date;
+    int year, month, day;
+    string incomeReason = "";
     int userId = 0;
 
 public:
-    Income(int userId, double amount, int year, int month, int day);
+    Income(int userId,string incomeReason, double amount, int year, int month, int day);
 
-    double getIncome();
+    double getAmount();
+    string getIncomeReason();
     tm getDate();
 
     void setIncome(double income);
-    void setData(int year, int month, int day);
+    void setDate(int year, int month, int day);
+    void setIncomeReason(string incomeReason);
 
     void display();
 
