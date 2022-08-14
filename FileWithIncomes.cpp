@@ -11,6 +11,11 @@ FileWithIncomes::FileWithIncomes(string name_of_file, int userId): FileXml(name_
     }
 };
 
+void FileWithIncomes::addIncome() {
+    Income newIncome = getNewIncomeData();
+    saveIncomeToFile(newIncome);
+};
+
 Income FileWithIncomes::getNewIncomeData() {
     char answer = {0};
     string incomeReason = "";
@@ -51,64 +56,8 @@ Income FileWithIncomes::getNewIncomeData() {
     return newIncome;
 };
 
-vector <Income> FileWithIncomes::loadIncomeFromFile() {};
-
-void FileWithIncomes::addIncome() {
-    Income newIncome = getNewIncomeData();
-    saveIncomeToFile(newIncome);
-};
-
-void FileWithIncomes::deleteIncome() {
-
-    CMarkup xml;
-    //xml.SetDoc(  () );
-    bool fileExists = xml.Load( getFileName());
-
-    if (!fileExists) {
-        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-        xml.AddElem(getFileName());
-    }
-
-    xml.FindElem(); // ORDER element is root
-    xml.IntoElem(); // inside ORDER
-    while ( xml.FindElem("Income") ) {
-        //xml.FindChildElem( "UserId" );
-        xml.RemoveChildElem();
-        xml.RemoveElem();
-         //   cout<<amount<<endl;
-        //if ( xml.GetChildData() == csFindSN )
-           // break; // found
-        xml.Save(getFileName());
-    }
-};
-
-string FileWithIncomes::getIncome(){
-    string amount ;
-    CMarkup xml;
-    //xml.SetDoc(  () );
-    bool fileExists = xml.Load( getFileName());
-
-    if (!fileExists) {
-        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-        xml.AddElem(getFileName());
-    }
-    xml.FindElem(); // ORDER element is root
-    xml.IntoElem(); // inside ORDER
-    while ( xml.FindElem("Income") ) {
-        xml.FindChildElem( "Amount" );
-        amount = xml.GetChildData();
-            cout<<amount<<endl;
-        //if ( xml.GetChildData() == csFindSN )
-           // break; // found
-    }
-    return amount;
-};
-
-
-
 void FileWithIncomes::saveIncomeToFile(Income income){
     CMarkup xml;
-    //xml.SetDoc(  () );
     bool fileExists = xml.Load( getFileName());
 
     if (!fileExists) {
@@ -128,3 +77,68 @@ void FileWithIncomes::saveIncomeToFile(Income income){
     xml.Save(getFileName());
 
 };
+
+string FileWithIncomes::getIncome(){
+    string amount ;
+    CMarkup xml;
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
+    xml.FindElem(); // ORDER element is root
+    xml.IntoElem(); // inside ORDER
+    while ( xml.FindElem("Income") ) {
+        xml.FindChildElem( "Amount" );
+        amount = xml.GetChildData();
+            cout<<amount<<endl;
+    }
+    return amount;
+};
+
+//vector <Income> FileWithIncomes::loadIncomeFromFile() {};
+
+
+/*
+void FileWithIncomes::deleteIncome() {
+
+    CMarkup xml;
+    //xml.SetDoc(  () );
+
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
+
+
+    xml.FindElem(); // ORDER element is root
+    xml.IntoElem(); // inside ORDER
+    while ( xml.FindElem("Income") ) {
+        xml.FindChildElem( "Amount" );
+        //xml.RemoveChildElem();
+        //xml.RemoveElem();
+        cout<<xml.GetChildData()<<endl;
+
+       // xml.Save(getFileName());
+    }
+/*
+   // CMarkup xml;
+   xml.ResetMainPos();
+xml.FindElem(); // ORDER element is root
+    xml.IntoElem(); // inside ORDER
+
+while ( xml.FindChildElem("Income") )
+{
+    xml.IntoElem();
+    xml.FindChildElem( "SN" );
+    CString csSN = xml.GetChildData();
+    xml.FindChildElem( "QTY" );
+//    int nQty = atoi( xml.GetChildData() );
+    xml.OutOfElem();
+}
+};
+*/
+
