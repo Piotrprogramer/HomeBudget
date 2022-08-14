@@ -16,7 +16,7 @@ using namespace std;
 class FileWithIncomes :public FileXml {
     //vector <Income> Incomes;
     int userId;
-    CMarkup xml;
+    //CMarkup xml;
     Income getNewIncomeData();
    void saveIncomeToFile(Income income);
 

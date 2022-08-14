@@ -1,7 +1,7 @@
 #include "FileWithIncomes.h"
 
 FileWithIncomes::FileWithIncomes(string name_of_file, int userId): FileXml(name_of_file) {
-    //CMarkup xml;
+    CMarkup xml;
     this->userId = userId;
     bool fileExists = xml.Load( getFileName());
 
@@ -60,8 +60,14 @@ void FileWithIncomes::addIncome() {
 
 void FileWithIncomes::deleteIncome() {
 
-    //CMarkup xml;
+    CMarkup xml;
     //xml.SetDoc(  () );
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
 
     xml.FindElem(); // ORDER element is root
     xml.IntoElem(); // inside ORDER
@@ -78,6 +84,14 @@ void FileWithIncomes::deleteIncome() {
 
 string FileWithIncomes::getIncome(){
     string amount ;
+    CMarkup xml;
+    //xml.SetDoc(  () );
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
     xml.FindElem(); // ORDER element is root
     xml.IntoElem(); // inside ORDER
     while ( xml.FindElem("Income") ) {
@@ -93,7 +107,14 @@ string FileWithIncomes::getIncome(){
 
 
 void FileWithIncomes::saveIncomeToFile(Income income){
-// CMarkup xml;
+    CMarkup xml;
+    //xml.SetDoc(  () );
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
 
     xml.FindElem();
     xml.IntoElem();
