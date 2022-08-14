@@ -1,39 +1,59 @@
 #include "Expense.h"
 
-Expense::Expense(int userId, double amount, int year, int month, int day) {
+Expense::Expense(int userId,string expenseReason, double amount, int year, int month, int day) {
     this->userId = userId;
     this->amount = amount;
-
-    data.tm_sec=0;
-    data.tm_min=0;
-    data.tm_hour=0;
-    data.tm_hour=0;
-    data.tm_wday=0;
-    data.tm_yday=0;
-
-    data.tm_mday  = day;
-    data.tm_mon  =  month;
-    data.tm_year = year;
+    this->expenseReason = expenseReason;
+    this->year = year;
+    this->month = month;
+    this->day = day;
 }
 
-double Expense::getExpense() {
+double Expense::getAmount() {
     return amount;
 };
 
-tm Expense::getDate() {
-    return data;
+string Expense::getDate() {
+    string date = "";
+    date = AuxiliaryMethods::converteIntToString(year);
+    date+= "|" + AuxiliaryMethods::converteIntToString(month);
+    date+= "|" + AuxiliaryMethods::converteIntToString(day);
+
+    return date;
 };
+
+int Expense::getYear(){
+    return year;
+}
+
+int Expense::getMonth(){
+    return month;
+}
+
+int Expense::getDay(){
+    return day;
+}
+
+string Expense::getExpenseReason(){
+    return expenseReason;
+}
 
 void Expense::setExpense(double amount) {
     this->amount = amount;
 };
 
-void Expense::setData(int year, int month, int day) {
-    data.tm_mday  = day;
-    data.tm_mon  =  month;
-    data.tm_year = year;
+void Expense::setDate(int year, int month, int day) {
+    this->year = year;
+    this->month = month;
+    this->day = day;
 };
 
-void Expense::display() {
-    cout<< amount << "PLN  - " <<data.tm_year << "/" << data.tm_mon << "/" << data.tm_mday <<endl;
+void Expense::setExpenseReason(string expenseReason){
+    this->expenseReason = expenseReason;
 }
+
+void Expense::display() {
+    cout<<"Kwota: "<< amount << "PLN  - " <<endl<<"Data: "<<year << "/" << month << "/" << day <<endl;
+    cout<<"Powod: " <<expenseReason<<endl;
+}
+
