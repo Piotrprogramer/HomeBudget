@@ -37,7 +37,7 @@ Income FileWithIncomes::getNewIncomeData() {
         day = date.tm_mday;
     } else {
         do {
-            cout<<"Date format:  rrrr-mm-dd";
+            cout<<"Date format:  rrrr mm dd";
             cout<<endl<<"Give the date: ";
             cin>>year>>month>>day;
             isValidDate = Calendar::isValidDate(day,month,year);
@@ -75,11 +75,15 @@ void FileWithIncomes::saveIncomeToFile(Income income){
     xml.AddElem("Date", income.getDate() );
 
     xml.Save(getFileName());
-
 };
 
-string FileWithIncomes::getIncome(){
-    string amount ;
+vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
+    vector <Income> incomes;
+    string data ;
+    int startYear , startMonth, startDay;
+    int endYear, endMonth, endDay;
+    bool isValidDate = false;
+
     CMarkup xml;
     bool fileExists = xml.Load( getFileName());
 
@@ -87,14 +91,59 @@ string FileWithIncomes::getIncome(){
         xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
         xml.AddElem(getFileName());
     }
+
     xml.FindElem(); // ORDER element is root
     xml.IntoElem(); // inside ORDER
+
+       cout<<"Set a balance period ( rrrr mm dd )"<<endl;
+       cout<<"Set a first date: ";
+       do{
+       cin >>startYear >>startMonth >>startDay;
+       isValidDate = Calendar::isValidDate(startDay,startMonth,startYear);
+       if(!isValidDate) cout<<"Incorrect date. Try again: ";
+       }while(!isValidDate);
+
+       cout<<"Set a last date: ";
+       do{
+       cin >>lastYear >>lastMonth >>lastDay;
+       isValidDate = Calendar::isValidDate(lastDay,lastMonth,lastYear);
+       if(!isValidDate) cout<<"Incorrect date. Try again: ";
+       }while(!isValidDate);
+
+    cout<<"--------------"<<endl;
     while ( xml.FindElem("Income") ) {
-        xml.FindChildElem( "Amount" );
-        amount = xml.GetChildData();
-            cout<<amount<<endl;
+        Income income(userId);
+
+        int year, month, day;
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+
+        cout<<data<<endl;
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        income.setIncomeReason(data);
+
+        cout<<data<<endl;
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        income.setAmount(AuxiliaryMethods::converteStringToDouble(data));
+        cout<<data<<endl;
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        income.setDate(year, month, day);
+        cout<<data<<endl;
+
+        day = AuxiliaryMethods::getDate( data, 2);
+        month = AuxiliaryMethods::getDate( data, 1);
+        year = AuxiliaryMethods::getDate( data, 0);
+
+        if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)){
+        incomes.push_back(income);
+        cout<<"EVERYTHING GONNA BE ALL RIGHT"<<endl;
+        };
+        cout<<"--------------"<<endl;
     }
-    return amount;
+    return incomes;
 };
 
 //vector <Income> FileWithIncomes::loadIncomeFromFile() {};

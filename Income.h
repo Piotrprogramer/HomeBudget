@@ -16,6 +16,7 @@ class Income {
 
 public:
     Income(int userId,string incomeReason, double amount, int year, int month, int day);
+    Income(int userId);
 
     double getAmount();
     string getIncomeReason();
@@ -24,7 +25,7 @@ public:
     int getMonth();
     int getDay();
 
-    void setIncome(double income);
+    void setAmount(double amount);
     void setDate(int year, int month, int day);
     void setIncomeReason(string incomeReason);
 

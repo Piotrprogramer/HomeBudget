@@ -9,6 +9,15 @@ Income::Income(int userId,string incomeReason, double amount, int year, int mont
     this->day = day;
 }
 
+Income::Income(int userId) {
+    this->userId = userId;
+    this->amount = 0;
+    this->incomeReason = "";
+    this->year = 2000;
+    this->month = 1;
+    this->day = 1;
+}
+
 double Income::getAmount() {
     return amount;
 };
@@ -38,7 +47,7 @@ string Income::getIncomeReason(){
     return incomeReason;
 }
 
-void Income::setIncome(double amount) {
+void Income::setAmount(double amount) {
     this->amount = amount;
 };
 
