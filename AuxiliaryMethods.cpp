@@ -36,6 +36,14 @@ int AuxiliaryMethods::converteStringToInt(string number) {
     return intNumber;
 }
 
+double AuxiliaryMethods::converteStringToDouble(string number) {
+    double num_double;
+    num_double = std::stod(number);
+
+    return num_double;
+}
+
+
 char AuxiliaryMethods::getChar() {
     string in = "";
     char sign  = {0};
@@ -104,3 +112,32 @@ double AuxiliaryMethods::getDoubleTypeOfNumber() {
     }
     return number;
 }
+
+int AuxiliaryMethods::getDate(string date, int position){
+    string day = "";
+    int returnDate = 0;
+    int counter = 0;
+
+    for(int i=0; i<date.length(); i++){
+        if(counter > position) break;
+        if(date[i] == '|') counter++;
+        if(counter == position) day += date[i];
+    }
+    returnDate = AuxiliaryMethods::converteStringToInt(day);
+
+    return returnDate;
+}
+
+bool AuxiliaryMethods::isDateInRange(int day, int month, int year, int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear){
+    int entryDate = (year * 10000) + (month * 100) + day;
+    int startDate = (startYear * 10000) + (startMonth * 100) + startDay;
+    int endDate = (endYear * 10000) + (endMonth * 100) + endDay;
+
+    if (startDate <= entryDate && entryDate <= endDate){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
