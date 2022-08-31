@@ -9,6 +9,15 @@ Expense::Expense(int userId,string expenseReason, double amount, int year, int m
     this->day = day;
 }
 
+Expense::Expense(int userId) {
+    this->userId = userId;
+    this->amount = 0;
+    this->expenseReason = "";
+    this->year = 2000;
+    this->month = 1;
+    this->day = 1;
+}
+
 double Expense::getAmount() {
     return amount;
 };
@@ -38,7 +47,7 @@ string Expense::getExpenseReason(){
     return expenseReason;
 }
 
-void Expense::setExpense(double amount) {
+void Expense::setAmount(double amount) {
     this->amount = amount;
 };
 
