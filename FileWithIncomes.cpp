@@ -122,6 +122,7 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
         cout<<data<<endl;
         xml.FindChildElem(  );
         data = xml.GetChildData();
+
         income.setIncomeReason(data);
 
         cout<<data<<endl;
