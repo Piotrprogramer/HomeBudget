@@ -105,8 +105,9 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
 
        cout<<"Set a last date: ";
        do{
-       cin >>lastYear >>lastMonth >>lastDay;
-       isValidDate = Calendar::isValidDate(lastDay,lastMonth,lastYear);
+       cin >>endYear >>endMonth >>endDay;
+
+       isValidDate = Calendar::isValidDate(endDay,endMonth,endYear);
        if(!isValidDate) cout<<"Incorrect date. Try again: ";
        }while(!isValidDate);
 
