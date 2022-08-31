@@ -97,3 +97,73 @@ string FileWithExpenses::getExpense(){
     return amount;
 };
 
+vector <Expense> FileWithExpenses::getVectorWithExpensesOfDateRange(){
+    vector <Expense> expenses;
+    string data ;
+    int startYear , startMonth, startDay;
+    int endYear, endMonth, endDay;
+    bool isValidDate = false;
+
+    CMarkup xml;
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
+
+    xml.FindElem(); // ORDER element is root
+    xml.IntoElem(); // inside ORDER
+
+       cout<<"Set a balance period ( rrrr mm dd )"<<endl;
+       cout<<"Set a first date: ";
+       do{
+       cin >>startYear >>startMonth >>startDay;
+       isValidDate = Calendar::isValidDate(startDay,startMonth,startYear);
+       if(!isValidDate) cout<<"Incorrect date. Try again: ";
+       }while(!isValidDate);
+
+       cout<<"Set a last date: ";
+       do{
+       cin >>endYear >>endMonth >>endDay;
+
+       isValidDate = Calendar::isValidDate(endDay,endMonth,endYear);
+       if(!isValidDate) cout<<"Incorrect date. Try again: ";
+       }while(!isValidDate);
+
+    cout<<"--------------"<<endl;
+    while ( xml.FindElem("Expense") ) {
+        Expense expense(userId);
+
+        int year, month, day;
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+
+        cout<<data<<endl;
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        expense.setExpenseReason(data);
+
+        cout<<data<<endl;
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        expense.setAmount(AuxiliaryMethods::converteStringToDouble(data));
+        cout<<data<<endl;
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        expense.setDate(year, month, day);
+        cout<<data<<endl;
+
+        day = AuxiliaryMethods::getDate( data, 2);
+        month = AuxiliaryMethods::getDate( data, 1);
+        year = AuxiliaryMethods::getDate( data, 0);
+
+        if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)){
+        expenses.push_back(expense);
+        cout<<"EVERYTHING GONNA BE ALL RIGHT"<<endl;
+        };
+        cout<<"--------------"<<endl;
+    }
+    return expenses;
+};
+

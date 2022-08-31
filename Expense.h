@@ -15,6 +15,7 @@ class Expense {
 
 public:
     Expense(int userId,string expenseReason, double amount, int year, int month, int day);
+    Expense(int userId);
 
     double getAmount();
     string getExpenseReason();
@@ -23,7 +24,7 @@ public:
     int getMonth();
     int getDay();
 
-    void setExpense(double income);
+    void setAmount(double income);
     void setDate(int year, int month, int day);
     void setExpenseReason(string expenseReason);
 

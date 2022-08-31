@@ -18,7 +18,7 @@ class FileWithExpenses: public FileXml {
 public:
     FileWithExpenses(string name_of_file, int userId);
     void addExpense();
-
+    vector <Expense> getVectorWithExpensesOfDateRange();
     string getExpense();
 
 };
