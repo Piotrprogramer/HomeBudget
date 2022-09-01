@@ -22,9 +22,6 @@ public:
     FileWithIncomes(string name_of_file, int userId);
     void addIncome();
     vector <Income> getVectorWithIncomesOfDateRange();
-    //void deleteIncome();
 
-    //vector <Income> loadIncomeFromFile();
-    //void saveIncomesToFile();
 };
 #endif
