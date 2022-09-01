@@ -111,7 +111,6 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
        if(!isValidDate) cout<<"Incorrect date. Try again: ";
        }while(!isValidDate);
 
-    cout<<"--------------"<<endl;
     while ( xml.FindElem("Income") ) {
         Income income(userId);
 
@@ -119,21 +118,18 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
         xml.FindChildElem(  );
         data = xml.GetChildData();
 
-        cout<<data<<endl;
         xml.FindChildElem(  );
         data = xml.GetChildData();
 
         income.setIncomeReason(data);
 
-        cout<<data<<endl;
         xml.FindChildElem(  );
         data = xml.GetChildData();
         income.setAmount(AuxiliaryMethods::converteStringToDouble(data));
-        cout<<data<<endl;
+
         xml.FindChildElem(  );
         data = xml.GetChildData();
         income.setDate(year, month, day);
-        cout<<data<<endl;
 
         day = AuxiliaryMethods::getDate( data, 2);
         month = AuxiliaryMethods::getDate( data, 1);
@@ -141,55 +137,8 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
 
         if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)){
         incomes.push_back(income);
-        cout<<"EVERYTHING GONNA BE ALL RIGHT"<<endl;
         };
-        cout<<"--------------"<<endl;
     }
     return incomes;
 };
-
-//vector <Income> FileWithIncomes::loadIncomeFromFile() {};
-
-
-/*
-void FileWithIncomes::deleteIncome() {
-
-    CMarkup xml;
-    //xml.SetDoc(  () );
-
-    bool fileExists = xml.Load( getFileName());
-
-    if (!fileExists) {
-        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-        xml.AddElem(getFileName());
-    }
-
-
-    xml.FindElem(); // ORDER element is root
-    xml.IntoElem(); // inside ORDER
-    while ( xml.FindElem("Income") ) {
-        xml.FindChildElem( "Amount" );
-        //xml.RemoveChildElem();
-        //xml.RemoveElem();
-        cout<<xml.GetChildData()<<endl;
-
-       // xml.Save(getFileName());
-    }
-/*
-   // CMarkup xml;
-   xml.ResetMainPos();
-xml.FindElem(); // ORDER element is root
-    xml.IntoElem(); // inside ORDER
-
-while ( xml.FindChildElem("Income") )
-{
-    xml.IntoElem();
-    xml.FindChildElem( "SN" );
-    CString csSN = xml.GetChildData();
-    xml.FindChildElem( "QTY" );
-//    int nQty = atoi( xml.GetChildData() );
-    xml.OutOfElem();
-}
-};
-*/
 

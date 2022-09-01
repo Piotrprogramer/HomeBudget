@@ -131,7 +131,6 @@ vector <Expense> FileWithExpenses::getVectorWithExpensesOfDateRange(){
        if(!isValidDate) cout<<"Incorrect date. Try again: ";
        }while(!isValidDate);
 
-    cout<<"--------------"<<endl;
     while ( xml.FindElem("Expense") ) {
         Expense expense(userId);
 
@@ -139,20 +138,17 @@ vector <Expense> FileWithExpenses::getVectorWithExpensesOfDateRange(){
         xml.FindChildElem(  );
         data = xml.GetChildData();
 
-        cout<<data<<endl;
         xml.FindChildElem(  );
         data = xml.GetChildData();
         expense.setExpenseReason(data);
 
-        cout<<data<<endl;
         xml.FindChildElem(  );
         data = xml.GetChildData();
         expense.setAmount(AuxiliaryMethods::converteStringToDouble(data));
-        cout<<data<<endl;
+
         xml.FindChildElem(  );
         data = xml.GetChildData();
         expense.setDate(year, month, day);
-        cout<<data<<endl;
 
         day = AuxiliaryMethods::getDate( data, 2);
         month = AuxiliaryMethods::getDate( data, 1);
@@ -160,9 +156,7 @@ vector <Expense> FileWithExpenses::getVectorWithExpensesOfDateRange(){
 
         if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)){
         expenses.push_back(expense);
-        cout<<"EVERYTHING GONNA BE ALL RIGHT"<<endl;
         };
-        cout<<"--------------"<<endl;
     }
     return expenses;
 };
