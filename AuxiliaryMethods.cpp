@@ -121,7 +121,7 @@ int AuxiliaryMethods::getDate(string date, int position){
     for(int i=0; i<date.length(); i++){
         if(counter > position) break;
         if(date[i] == '|') counter++;
-        if(counter == position) day += date[i];
+        if(counter == position && date[i] != '|') day += date[i];
     }
     returnDate = AuxiliaryMethods::converteStringToInt(day);
 
