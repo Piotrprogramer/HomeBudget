@@ -100,8 +100,17 @@ string FileWithExpenses::getExpense(){
 vector <Expense> FileWithExpenses::getVectorWithExpensesOfDateRange(){
     vector <Expense> expenses;
     string data ;
+
+    double amount = 0;
+    int year, month, day;
+    string expenseReason = "";
+
     int startYear , startMonth, startDay;
     int endYear, endMonth, endDay;
+    /*
+    int startYear=1500 , startMonth=1, startDay=1;
+    int endYear=3000, endMonth=12, endDay=30;
+    */
     bool isValidDate = false;
 
     CMarkup xml;
@@ -132,29 +141,27 @@ vector <Expense> FileWithExpenses::getVectorWithExpensesOfDateRange(){
        }while(!isValidDate);
 
     while ( xml.FindElem("Expense") ) {
-        Expense expense(userId);
-
         int year, month, day;
         xml.FindChildElem(  );
         data = xml.GetChildData();
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
-        expense.setExpenseReason(data);
+        expenseReason = data;
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
-        expense.setAmount(AuxiliaryMethods::converteStringToDouble(data));
+        amount = AuxiliaryMethods::converteStringToDouble(data);
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
-        expense.setDate(year, month, day);
 
         day = AuxiliaryMethods::getDate( data, 2);
         month = AuxiliaryMethods::getDate( data, 1);
         year = AuxiliaryMethods::getDate( data, 0);
 
         if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)){
+        Expense expense(userId,expenseReason,amount,year,month,day);
         expenses.push_back(expense);
         };
     }

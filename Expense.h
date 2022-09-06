@@ -15,7 +15,12 @@ class Expense {
 
 public:
     Expense(int userId,string expenseReason, double amount, int year, int month, int day);
-    Expense(int userId);
+
+    bool operator<(const Expense &r) const{
+        if ( ((year * 10000) + (month * 100) + day) != ((r.year * 10000) + (r.month * 100) + r.day)) {
+            return ((year * 10000) + (month * 100) + day) < ((r.year * 10000) + (r.month * 100) + r.day);
+        }
+    }
 
     double getAmount();
     string getExpenseReason();

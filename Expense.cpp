@@ -9,15 +9,6 @@ Expense::Expense(int userId,string expenseReason, double amount, int year, int m
     this->day = day;
 }
 
-Expense::Expense(int userId) {
-    this->userId = userId;
-    this->amount = 0;
-    this->expenseReason = "";
-    this->year = 2000;
-    this->month = 1;
-    this->day = 1;
-}
-
 double Expense::getAmount() {
     return amount;
 };
@@ -65,4 +56,3 @@ void Expense::display() {
     cout<<"Kwota: "<< amount << "PLN  - " <<endl<<"Data: "<<year << "/" << month << "/" << day <<endl;
     cout<<"Powod: " <<expenseReason<<endl;
 }
-

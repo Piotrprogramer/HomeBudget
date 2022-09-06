@@ -114,14 +114,15 @@ double AuxiliaryMethods::getDoubleTypeOfNumber() {
 }
 
 int AuxiliaryMethods::getDate(string date, int position){
+
     string day = "";
     int returnDate = 0;
     int counter = 0;
 
     for(int i=0; i<date.length(); i++){
-        if(counter > position) break;
         if(date[i] == '|') counter++;
         if(counter == position && date[i] != '|') day += date[i];
+        if(counter > position) break;
     }
     returnDate = AuxiliaryMethods::converteStringToInt(day);
 
@@ -140,4 +141,3 @@ bool AuxiliaryMethods::isDateInRange(int day, int month, int year, int startDay,
         return false;
     }
 }
-

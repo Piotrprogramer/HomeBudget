@@ -16,7 +16,12 @@ class Income {
 
 public:
     Income(int userId,string incomeReason, double amount, int year, int month, int day);
-    Income(int userId);
+
+    bool operator<(const Income &r) const{
+        if ( ((year * 10000) + (month * 100) + day) != ((r.year * 10000) + (r.month * 100) + r.day)) {
+            return ((year * 10000) + (month * 100) + day) < ((r.year * 10000) + (r.month * 100) + r.day);
+        }
+    }
 
     double getAmount();
     string getIncomeReason();
