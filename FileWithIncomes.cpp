@@ -79,7 +79,12 @@ void FileWithIncomes::saveIncomeToFile(Income income){
 
 vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
     vector <Income> incomes;
-    string data ;
+    string data;
+
+    double amount = 0;
+    int year, month, day;
+    string incomeReason = "";
+
     int startYear , startMonth, startDay;
     int endYear, endMonth, endDay;
     bool isValidDate = false;
@@ -112,7 +117,6 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
        }while(!isValidDate);
 
     while ( xml.FindElem("Income") ) {
-        Income income(userId);
 
         int year, month, day;
         xml.FindChildElem(  );
@@ -120,22 +124,24 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
-
-        income.setIncomeReason(data);
-
-        xml.FindChildElem(  );
-        data = xml.GetChildData();
-        income.setAmount(AuxiliaryMethods::converteStringToDouble(data));
+        incomeReason = data;
+        //income.setIncomeReason(data);
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
-        income.setDate(year, month, day);
+        amount = AuxiliaryMethods::converteStringToDouble(data);
+        //income.setAmount(AuxiliaryMethods::converteStringToDouble(data));
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        //income.setDate(year, month, day);
 
         day = AuxiliaryMethods::getDate( data, 2);
         month = AuxiliaryMethods::getDate( data, 1);
         year = AuxiliaryMethods::getDate( data, 0);
 
         if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)){
+        Income income( userId, incomeReason, amount, year, month, day);
         incomes.push_back(income);
         };
     }
