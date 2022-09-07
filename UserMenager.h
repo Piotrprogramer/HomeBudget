@@ -7,34 +7,34 @@
 #include <fstream>
 #include <sstream>
 
-#include "Uzytkownik.h"
-#include "PlikZUzytkownikami.h"
-#include "MetodyPomocnicze.h"
+#include "User.h"
+#include "FileWithUsers.h"
+#include "AuxiliaryMethods.h"
 
 
 using namespace std;
 
 class UserMenager {
     int idZalogowanegoUzytkownika;
-    vector <Uzytkownik> uzytkownicy;
-    PlikZUzytkownikami plikZUzytkownikami;
+    vector <User> uzytkownicy;
+    FileWithUsers fileWithUsers;
 
-    Uzytkownik podajDaneNowegoUzytkownika();
-    int pobierzIdNowegoUzytkownika();
-    bool czyIstniejeLogin(string login);
+    //User podajDaneNowegoUzytkownika();
+    //int pobierzIdNowegoUzytkownika();
+    //bool czyIstniejeLogin(string login);
 
-    MetodyPomocnicze metodyPomocnicze;
+   // MetodyPomocnicze metodyPomocnicze;
 
 public:
-    UzytkownikMenager(string nazwaPlikuZUzytkownikami): plikZUzytkownikami(nazwaPlikuZUzytkownikami) {
-        wczytajUzytkownikowZPliku();
+    UserMenager(string FileNameWithUsers): fileWithUsers(FileNameWithUsers) {
+       // wczytajUzytkownikowZPliku();
     };
 
-    void rejestracjaUzytkownika();
-    void wczytajUzytkownikowZPliku();
-    int logowanieUzytkownika();
-    void wylogujUzytkownika();
-    void zmienHasloZalogowanegoUzytkownika();
-    int pobierzIdZalogowanegoUzytkownika();
+    //void rejestracjaUzytkownika();
+    //void wczytajUzytkownikowZPliku();
+    //int logowanieUzytkownika();
+    //void wylogujUzytkownika();
+    //void zmienHasloZalogowanegoUzytkownika();
+    //int pobierzIdZalogowanegoUzytkownika();
 };
 #endif

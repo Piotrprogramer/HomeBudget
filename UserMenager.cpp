@@ -1,5 +1,5 @@
 #include "UserMenager.h"
-
+/*
 void UserMenager::rejestracjaUzytkownika() {
     Uzytkownik uzytkownik = podajDaneNowegoUzytkownika();
 
@@ -123,3 +123,4 @@ void UserMenager::wylogujUzytkownika() {
 int UserMenager::pobierzIdZalogowanegoUzytkownika() {
     return idZalogowanegoUzytkownika;
 }
+*/

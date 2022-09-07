@@ -1,7 +1,7 @@
 #include "FileWithUsers.h"
 
 using namespace std;
-
+/*
 void FileWithUsers::dopiszUzytkownikaDoPliku(Uzytkownik uzytkownik) {
     string liniaZDanymiUzytkownika = "";
     fstream plikTekstowy;
@@ -99,3 +99,4 @@ void FileWithUsers::zapiszWszystkichUzytkownikowDoPliku(vector <Uzytkownik> uzyt
     }
     plikTekstowy.close();
 }
+*/

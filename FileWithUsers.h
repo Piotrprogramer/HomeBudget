@@ -1,28 +1,31 @@
-#ifndef PLIKZUZYTKOWNIKAMI_H
-#define PLIKZUZYTKOWNIKAMI_H
+#ifndef FILEWITHUSERS_H
+#define FILEWITHUSERS_H
+
 
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include <cstdlib>
 
-#include "Uzytkownik.h"
-#include "MetodyPomocnicze.h"
+#include "FileXml.h"
+#include "User.h"
+#include "AuxiliaryMethods.h"
 #include "PlikTekstowy.h"
+
 
 using namespace std;
 
-class FileWithUsers :public PlikTekstowy{
+class FileWithUsers :public FileXml{
 
-    string zamienDaneUzytkownikaNaLinieZDanymiOddzielonaPionowymiKreskami(Uzytkownik uzytkownik);
-    Uzytkownik pobierzDaneUzytkownika(string daneJednegoUzytkownikaOddzielonePionowymiKreskami);
-    int pobierzIdUzytkownikaZDanychOddzielonychPionowymiKreskami(string daneJednegoAdresataOddzielonePionowymiKreskami);
+    //string zamienDaneUzytkownikaNaLinieZDanymiOddzielonaPionowymiKreskami(User user);
+    //User pobierzDaneUzytkownika(string daneJednegoUzytkownikaOddzielonePionowymiKreskami);
+    //int pobierzIdUzytkownikaZDanychOddzielonychPionowymiKreskami(string daneJednegoAdresataOddzielonePionowymiKreskami);
 
 public:
-    PlikZUzytkownikami(string NAZWAPLIKUZUZYTKOWNIKAMI):  PlikTekstowy(NAZWAPLIKUZUZYTKOWNIKAMI) {};
+    FileWithUsers(string FILENAMEWITHUSERS):  FileXml(FILENAMEWITHUSERS) {};
 
-    void dopiszUzytkownikaDoPliku(Uzytkownik uzytkownik);
-    void zapiszWszystkichUzytkownikowDoPliku(vector <Uzytkownik> uzytkownicy);
-    vector <Uzytkownik> wczytajUzytkownikowZPliku();
+    //void dopiszUzytkownikaDoPliku(User user);
+    //void zapiszWszystkichUzytkownikowDoPliku(vector <User> users);
+    //vector <user> wczytajUzytkownikowZPliku();
 };
 #endif
