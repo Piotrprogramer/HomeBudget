@@ -7,6 +7,12 @@
 #include <fstream>
 #include <cstdlib>
 
+
+#include "Markup.h"
+
+
+
+
 #include "FileXml.h"
 #include "User.h"
 #include "AuxiliaryMethods.h"
@@ -16,16 +22,17 @@
 using namespace std;
 
 class FileWithUsers :public FileXml{
-
-    //string zamienDaneUzytkownikaNaLinieZDanymiOddzielonaPionowymiKreskami(User user);
-    //User pobierzDaneUzytkownika(string daneJednegoUzytkownikaOddzielonePionowymiKreskami);
-    //int pobierzIdUzytkownikaZDanychOddzielonychPionowymiKreskami(string daneJednegoAdresataOddzielonePionowymiKreskami);
+    vector <User> users;
+    vector <User> getUsers();
+    User getNewUserData();
+    int getNewUserId();
+    bool checkUsernameAvailability(string login);
+    void saveUserToFile(User user);
 
 public:
-    FileWithUsers(string FILENAMEWITHUSERS):  FileXml(FILENAMEWITHUSERS) {};
-
-    //void dopiszUzytkownikaDoPliku(User user);
-    //void zapiszWszystkichUzytkownikowDoPliku(vector <User> users);
-    //vector <user> wczytajUzytkownikowZPliku();
+    FileWithUsers(string FILENAMEWITHUSERS):  FileXml(FILENAMEWITHUSERS) {
+    users = getUsers();
+    };
+    void addUser();
 };
 #endif

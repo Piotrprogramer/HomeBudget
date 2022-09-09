@@ -1,102 +1,103 @@
 #include "FileWithUsers.h"
 
 using namespace std;
-/*
-void FileWithUsers::dopiszUzytkownikaDoPliku(Uzytkownik uzytkownik) {
-    string liniaZDanymiUzytkownika = "";
-    fstream plikTekstowy;
-    plikTekstowy.open(NAZWA_PLIKU.c_str(), ios::app);
 
-    if (plikTekstowy.good() == true) {
-        liniaZDanymiUzytkownika = zamienDaneUzytkownikaNaLinieZDanymiOddzielonaPionowymiKreskami(uzytkownik);
+vector <User> FileWithUsers::getUsers(){
+    vector <User> users;
 
-        if (czyPlikJestPusty() == true) {
-            plikTekstowy << liniaZDanymiUzytkownika;
-        } else {
-            plikTekstowy << endl << liniaZDanymiUzytkownika ;
-        }
-    } else
-        cout << "Nie udalo sie otworzyc pliku " << NAZWA_PLIKU << " i zapisac w nim danych." << endl;
-    plikTekstowy.close();
-}
+    CMarkup xml;
+    bool fileExists = xml.Load( getFileName());
 
-string FileWithUsers::zamienDaneUzytkownikaNaLinieZDanymiOddzielonaPionowymiKreskami(Uzytkownik uzytkownik) {
-    string liniaZDanymiUzytkownika = "";
-
-    liniaZDanymiUzytkownika += MetodyPomocnicze::konwerjsaIntNaString(uzytkownik.pobierzId())+ '|';
-    liniaZDanymiUzytkownika += uzytkownik.pobierzLogin() + '|';
-    liniaZDanymiUzytkownika += uzytkownik.pobierzHaslo() + '|';
-
-    return liniaZDanymiUzytkownika;
-}
-
-vector <Uzytkownik> FileWithUsers::wczytajUzytkownikowZPliku() {
-    Uzytkownik uzytkownik;
-    vector <Uzytkownik> uzytkownicy;
-    string daneJednegoUzytkownikaOddzielonePionowymiKreskami = "";
-    fstream plikTekstowy;
-    plikTekstowy.open(NAZWA_PLIKU.c_str(), ios::in);
-
-    if (plikTekstowy.good() == true) {
-        while (getline(plikTekstowy, daneJednegoUzytkownikaOddzielonePionowymiKreskami)) {
-            uzytkownik = pobierzDaneUzytkownika(daneJednegoUzytkownikaOddzielonePionowymiKreskami);
-            uzytkownicy.push_back(uzytkownik);
-        }
-    }
-    plikTekstowy.close();
-
-    return uzytkownicy;
-}
-
-Uzytkownik FileWithUsers::pobierzDaneUzytkownika(string daneJednegoUzytkownikaOddzielonePionowymiKreskami) {
-    Uzytkownik uzytkownik;
-    string pojedynczaDanaUzytkownika = "";
-    int numerPojedynczejDanejUzytkownika = 1;
-
-    for (int pozycjaZnaku = 0; pozycjaZnaku < daneJednegoUzytkownikaOddzielonePionowymiKreskami.length(); pozycjaZnaku++) {
-        if (daneJednegoUzytkownikaOddzielonePionowymiKreskami[pozycjaZnaku] != '|') {
-            pojedynczaDanaUzytkownika += daneJednegoUzytkownikaOddzielonePionowymiKreskami[pozycjaZnaku];
-        } else {
-            switch(numerPojedynczejDanejUzytkownika) {
-            case 1:
-                uzytkownik.ustawId(atoi(pojedynczaDanaUzytkownika.c_str()));
-                break;
-            case 2:
-                uzytkownik.ustawLogin(pojedynczaDanaUzytkownika);
-                break;
-            case 3:
-                uzytkownik.ustawHaslo(pojedynczaDanaUzytkownika);
-                break;
-            }
-            pojedynczaDanaUzytkownika = "";
-            numerPojedynczejDanejUzytkownika++;
-        }
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
     }
 
-    return uzytkownik;
-}
+    while ( xml.FindElem("User") ) {
+        int userId;
+        string login;
+        string password;
+        string data;
 
-void FileWithUsers::zapiszWszystkichUzytkownikowDoPliku(vector <Uzytkownik> uzytkownicy) {
-    fstream plikTekstowy;
-    string liniaZDanymiUzytkownika = "";
-    vector <Uzytkownik>::iterator itrKoniec = --uzytkownicy.end();
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        userId = AuxiliaryMethods::converteStringToInt(data);
 
-    plikTekstowy.open(NAZWA_PLIKU.c_str(), ios::out);
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        login = data;
 
-    if (plikTekstowy.good() == true) {
-        for (vector <Uzytkownik>::iterator itr = uzytkownicy.begin(); itr != uzytkownicy.end(); itr++) {
-            liniaZDanymiUzytkownika = zamienDaneUzytkownikaNaLinieZDanymiOddzielonaPionowymiKreskami(*itr);
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        password = data;
 
-            if (itr == itrKoniec) {
-                plikTekstowy << liniaZDanymiUzytkownika;
-            } else {
-                plikTekstowy << liniaZDanymiUzytkownika << endl;
-            }
-            liniaZDanymiUzytkownika = "";
-        }
-    } else {
-        cout << "Nie mozna otworzyc pliku " << NAZWA_PLIKU << endl;
+        User user(userId,login,password);
+        users.push_back(user);
     }
-    plikTekstowy.close();
+    return users;
+};
+
+User FileWithUsers::getNewUserData(){
+    int userId;
+    string login;
+    string password;
+
+    bool isAvailable = false;
+
+    while(!isAvailable){
+    cout<<"Set username: ";
+    cin>>login;
+    isAvailable = checkUsernameAvailability(login);
+    if(!isAvailable) cout<<"User name is already used. Try again."<<endl;
+    }
+
+    cout<<"Set password: "<<endl;
+    cin>>password;
+
+    userId = getNewUserId();
+    User newUser(userId,login,password);
+    return newUser;
+};
+
+bool FileWithUsers::checkUsernameAvailability(string login){
+    bool isAvailable = true;
+
+    for (auto x : users) if(x.getLogin() == login) {
+       isAvailable = false;
+       break;
+    }
+
+    return isAvailable;
+};
+
+int FileWithUsers::getNewUserId() {
+    if (users.empty() == true)
+        return 1;
+    else
+        return users.back().getUserId() + 1;
 }
-*/
+
+void FileWithUsers::saveUserToFile(User user){
+    CMarkup xml;
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
+
+    xml.FindElem();
+    xml.IntoElem();
+    xml.AddElem("User");
+    xml.IntoElem();
+    xml.AddElem("UserId", user.getUserId());
+    xml.AddElem("UserLogin", user.getLogin());
+    xml.AddElem("Password", user.getPassword());
+
+    xml.Save(getFileName());
+};
+
+void FileWithUsers::addUser(){
+    User newUser = getNewUserData();
+    saveUserToFile(newUser);
+};
