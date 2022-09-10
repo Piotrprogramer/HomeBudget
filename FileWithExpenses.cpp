@@ -107,10 +107,7 @@ vector <Expense> FileWithExpenses::getVectorWithExpensesOfDateRange(){
 
     int startYear , startMonth, startDay;
     int endYear, endMonth, endDay;
-    /*
-    int startYear=1500 , startMonth=1, startDay=1;
-    int endYear=3000, endMonth=12, endDay=30;
-    */
+
     bool isValidDate = false;
 
     CMarkup xml;

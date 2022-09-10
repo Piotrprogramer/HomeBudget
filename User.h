@@ -11,12 +11,6 @@ class User {
     string password;
 
 public:
-User(){
-    this->userId = 0;
-    this->login = "test";
-    this->password = "p";
-}
-
 User(int id, string login, string password){
     this->userId = id;
     this->login = login;
@@ -27,7 +21,6 @@ int getUserId();
 string getLogin();
 string getPassword();
 
-int setUserId(int id);
 string setLogin(string login);
 string setPassword(string password);
 

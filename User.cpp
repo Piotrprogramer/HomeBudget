@@ -12,10 +12,6 @@ string User::getPassword() {
     return password;
 }
 
-int User::setUserId(int id) {
-    this->userId = id;
-}
-
 string User::setLogin(string login) {
     this->login = login;
 }
