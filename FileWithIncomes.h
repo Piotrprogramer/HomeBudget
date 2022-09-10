@@ -2,14 +2,11 @@
 #define FILEWITHINCOMES_h
 
 #include <iostream>
-//#include <vector>
 #include "Markup.h"
 #include "FileXml.h"
 #include "Income.h"
 #include "AuxiliaryMethods.h"
 #include "Calendar.h"
-//#include <cstring>
-
 
 using namespace std;
 
@@ -22,6 +19,5 @@ public:
     FileWithIncomes(string name_of_file, int userId);
     void addIncome();
     vector <Income> getVectorWithIncomesOfDateRange();
-
 };
 #endif

@@ -2,7 +2,6 @@
 #include "Markup.h"
 #include "User.h"
 
-
 #include "FileWithIncomes.h"
 
 using namespace std;
@@ -17,11 +16,10 @@ int fileWithIncomes_main()
 for ( int i = 0; i < incomes.size(); i++ ) {
      cout << incomes[ i ] .getDate()<<"    "<<incomes[ i ].getAmount()<<"   "<<incomes[i].getIncomeReason()<<endl;// = i;
 }
-     sort(incomes.begin(), incomes.end());
+    sort(incomes.begin(), incomes.end());
 
     cout << "Sorted \n";
     for (auto x : incomes) cout << x.getDate()<<"    " << x.getAmount()<<"   "<<x.getIncomeReason()<<endl;// = i;
-
 
     return 0;
 }
@@ -32,12 +30,12 @@ for ( int i = 0; i < incomes.size(); i++ ) {
 #include "UserMenager.h"
 #include "FileWithUsers.h"
 
-
 using namespace std;
 
-
 int main(){
-
+    FileWithUsers fileWithUsers("FileWithUsers.xml");
+    fileWithUsers.addUser();
+    fileWithUsers.displayAll();
 
     return 0;
 }

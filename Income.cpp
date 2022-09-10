@@ -53,7 +53,6 @@ void Income::setIncomeReason(string incomeReason){
 }
 
 void Income::display() {
-    //cout<<"Kwota: "<< amount << "PLN  - " <<endl<<"Data: "<<date.tm_year << "/" << date.tm_mon << "/" << date.tm_mday <<endl;
     cout<<"Kwota: "<< amount << "PLN  - " <<endl<<"Data: "<<year << "/" << month << "/" << day <<endl;
     cout<<"Powod: " <<incomeReason<<endl;
 }

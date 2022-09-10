@@ -10,29 +10,29 @@ void UserMenager::rejestracjaUzytkownika() {
     system("pause");
 }
 
-Uzytkownik UserMenager::podajDaneNowegoUzytkownika() {
-    Uzytkownik uzytkownik;
-    uzytkownik.ustawId(pobierzIdNowegoUzytkownika());
+User UserMenager::podajDaneNowegoUzytkownika() {
+    User user;
+    user.setUserId(getNewIdForUser());
     string login;
     do {
-        cout << endl << "Podaj login: ";
+        cout << endl << "Set login: ";
         cin >> login;
-        uzytkownik.ustawLogin(login);
-    } while (czyIstniejeLogin(uzytkownik.pobierzLogin()) == true);
+        user.setLogin(login);
+    } while (czyIstniejeLogin(user.pobierzLogin()) == true);
 
-    string haslo;
-    cout << "Podaj haslo: ";
-    cin >> haslo;
-    uzytkownik.ustawHaslo(haslo);
+    string password;
+    cout << "Set password: ";
+    cin >> password;
+    user.setPassword(password);
 
-    return uzytkownik;
+    return user;
 }
 
-int UserMenager::pobierzIdNowegoUzytkownika() {
-    if (uzytkownicy.empty() == true)
+int UserMenager::getNewIdForUser() {
+    if (users.empty() == true)
         return 1;
     else
-        return uzytkownicy.back().pobierzId() + 1;
+        return users.back().getUserId() + 1;
 }
 
 bool UserMenager::czyIstniejeLogin(string login) {

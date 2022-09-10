@@ -1,7 +1,5 @@
 #include "FileWithUsers.h"
 
-using namespace std;
-
 vector <User> FileWithUsers::getUsers(){
     vector <User> users;
 
@@ -13,6 +11,9 @@ vector <User> FileWithUsers::getUsers(){
         xml.AddElem(getFileName());
     }
 
+    xml.FindElem(); // ORDER element is root
+    xml.IntoElem(); // inside ORDER
+
     while ( xml.FindElem("User") ) {
         int userId;
         string login;
@@ -22,6 +23,7 @@ vector <User> FileWithUsers::getUsers(){
         xml.FindChildElem(  );
         data = xml.GetChildData();
         userId = AuxiliaryMethods::converteStringToInt(data);
+        lastUserId = userId;
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
@@ -51,7 +53,7 @@ User FileWithUsers::getNewUserData(){
     if(!isAvailable) cout<<"User name is already used. Try again."<<endl;
     }
 
-    cout<<"Set password: "<<endl;
+    cout<<"Set password: ";
     cin>>password;
 
     userId = getNewUserId();
@@ -74,7 +76,7 @@ int FileWithUsers::getNewUserId() {
     if (users.empty() == true)
         return 1;
     else
-        return users.back().getUserId() + 1;
+        return ++lastUserId;
 }
 
 void FileWithUsers::saveUserToFile(User user){
@@ -95,9 +97,16 @@ void FileWithUsers::saveUserToFile(User user){
     xml.AddElem("Password", user.getPassword());
 
     xml.Save(getFileName());
+    users.push_back(user);
 };
 
 void FileWithUsers::addUser(){
     User newUser = getNewUserData();
     saveUserToFile(newUser);
 };
+
+void FileWithUsers::displayAll(){
+    for(auto x:users ) cout<<"Id: "<<x.getUserId()<<endl<<"user name: "<<x.getLogin()<<endl<<"Password: "<<x.getPassword()<<endl<<"----------------------"<<endl;
+};
+
+

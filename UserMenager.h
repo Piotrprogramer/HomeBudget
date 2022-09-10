@@ -16,14 +16,13 @@ using namespace std;
 
 class UserMenager {
     int idZalogowanegoUzytkownika;
-    vector <User> uzytkownicy;
+    vector <User> users;
     FileWithUsers fileWithUsers;
 
-    //User podajDaneNowegoUzytkownika();
-    //int pobierzIdNowegoUzytkownika();
+    User podajDaneNowegoUzytkownika();
+    int getNewIdForUser();
     //bool czyIstniejeLogin(string login);
 
-   // MetodyPomocnicze metodyPomocnicze;
 
 public:
     UserMenager(string FileNameWithUsers): fileWithUsers(FileNameWithUsers) {

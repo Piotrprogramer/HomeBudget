@@ -35,6 +35,5 @@ public:
     void setIncomeReason(string incomeReason);
 
     void display();
-
 };
 #endif

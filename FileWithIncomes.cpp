@@ -125,16 +125,13 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
         xml.FindChildElem(  );
         data = xml.GetChildData();
         incomeReason = data;
-        //income.setIncomeReason(data);
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
         amount = AuxiliaryMethods::converteStringToDouble(data);
-        //income.setAmount(AuxiliaryMethods::converteStringToDouble(data));
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
-        //income.setDate(year, month, day);
 
         day = AuxiliaryMethods::getDate( data, 2);
         month = AuxiliaryMethods::getDate( data, 1);
