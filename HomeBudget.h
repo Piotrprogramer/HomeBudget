@@ -16,11 +16,22 @@ class HomeBudget {
     FileWithIncomes *fileWithIncomes;
     FileWithExpenses *fileWithExpenses;
 
+    void startMenu();
+    void userMenu();
+    void loadIncomesAndExpenses();
+
 public:
     HomeBudget(string FILEWITHUSERS, string FILEWITHINCOMES, string FILEWITHEXPENSES)
         :userMenager(FILEWITHUSERS),  fileWithIncomesName(FILEWITHINCOMES),  fileWithExpensesName(FILEWITHEXPENSES) {
-        userMenager.mainMenu();
-        };
+        //startMenu();
+        userMenu();
+    };
+    ~HomeBudget() {
+        delete fileWithIncomes;
+        fileWithIncomes = NULL;
+        delete fileWithExpenses;
+        fileWithExpenses = NULL;
+    };
 };
 
 #endif

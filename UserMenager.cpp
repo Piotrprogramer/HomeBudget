@@ -1,14 +1,16 @@
 #include "UserMenager.h"
 
-
-int UserMenager::mainMenu() {
+void UserMenager::mainMenu() {
     char choice;
-    while(1) {
+    while(idLoggedUser == 0) {
         cin.sync();
         system("cls");
-        cout<<idLoggedUser<<endl;
-        cout<<"1- Log in"<<endl<< "2- Sing up"<<endl<< "0- Exit application"<<endl<<"-------------------"<<endl;
+        cout<<"1- Log in"<<endl;
+        cout<<"2- Sing up"<<endl;
+        cout<<"0- Exit application"<<endl;
+        cout<<"====================="<<endl;
         choice = AuxiliaryMethods::getChar();
+
         switch(choice) {
         case '1': {
             loggingUser();
@@ -18,12 +20,10 @@ int UserMenager::mainMenu() {
             registerNewUser();
             break;
         }
-        case '0': exit(0);
+        case '0':
+            exit(0);
         }
     }
-
-    loggingUser();
-    return 0;
 };
 
 void UserMenager::loggingUser() {
@@ -34,8 +34,8 @@ void UserMenager::loggingUser() {
     cout << endl << "Enter your login: ";
     login = AuxiliaryMethods::getLine();
 
-    vector <User>::iterator itr = users.begin();
-    while (itr != users.end()) {
+    vector <User>::iterator itr = fileWithUsers.begin();
+    while (itr != fileWithUsers.end()) {
         if (itr -> getLogin() == login) {
             loginFound = true;
             for (int trialsNumber = 3; trialsNumber > 0; trialsNumber--) {
@@ -65,8 +65,12 @@ void UserMenager::loggingUser() {
     }
 }
 
+void UserMenager::logOutUser(){
+    idLoggedUser = 0;
+}
+
 vector <User> UserMenager::getUsers() {
-    vector <User> users;
+    vector <User> fileWithUsers;
 
     CMarkup xml;
     bool fileExists = xml.Load( getFileName());
@@ -99,9 +103,9 @@ vector <User> UserMenager::getUsers() {
         password = data;
 
         User user(userId,login,password);
-        users.push_back(user);
+        fileWithUsers.push_back(user);
     }
-    return users;
+    return fileWithUsers;
 };
 
 User UserMenager::getNewUserData() {
@@ -145,6 +149,7 @@ User UserMenager::podajDaneNowegoUzytkownika() {
     return user;
 }
 */
+
 int UserMenager::getIdLoggedUser() {
     return idLoggedUser;
 }
@@ -152,7 +157,7 @@ int UserMenager::getIdLoggedUser() {
 bool UserMenager::checkUsernameAvailability(string login) {
     bool isAvailable = true;
 
-    for (auto x : users) if(x.getLogin() == login) {
+    for (auto x : fileWithUsers) if(x.getLogin() == login) {
             isAvailable = false;
             break;
         }
@@ -161,7 +166,7 @@ bool UserMenager::checkUsernameAvailability(string login) {
 };
 
 int UserMenager::getNewUserId() {
-    if (users.empty() == true)
+    if (fileWithUsers.empty() == true)
         return 1;
     else
         return ++lastUserId;
@@ -185,7 +190,7 @@ void UserMenager::saveUserToFile(User user) {
     xml.AddElem("Password", user.getPassword());
 
     xml.Save(getFileName());
-    users.push_back(user);
+    fileWithUsers.push_back(user);
 };
 
 void UserMenager::addUser() {
@@ -194,7 +199,7 @@ void UserMenager::addUser() {
 };
 
 void UserMenager::displayAll() {
-    for(auto x:users ) cout<<"Id: "<<x.getUserId()<<endl<<"user name: "<<x.getLogin()<<endl<<"Password: "<<x.getPassword()<<endl<<"----------------------"<<endl;
+    for(auto x:fileWithUsers ) cout<<"Id: "<<x.getUserId()<<endl<<"user name: "<<x.getLogin()<<endl<<"Password: "<<x.getPassword()<<endl<<"----------------------"<<endl;
 };
 
 
@@ -203,7 +208,7 @@ void UserMenager::displayAll() {
 void UserMenager::registerNewUser() {
     User user = getNewUserData();
 
-    users.push_back(user);
+    fileWithUsers.push_back(user);
     saveUserToFile(user);
 
     cout << endl << "Registration completed successfully" << endl << endl;
@@ -214,10 +219,10 @@ void UserMenager::registerNewUser() {
 
 /*
 int UserMenager::getNewIdForUser() {
-    if (users.empty() == true)
+    if (fileWithUsers.empty() == true)
         return 1;
     else
-        return users.back().getUserId() + 1;
+        return fileWithUsers.back().getUserId() + 1;
 }
 
 bool UserMenager::czyIstniejeLogin(string login) {

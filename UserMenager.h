@@ -16,9 +16,9 @@ using namespace std;
 
 class UserMenager: public FileXml {
     int lastUserId;
-    int idLoggedUser;
+    int idLoggedUser = 0;
 
-    vector <User> users;
+    vector <User> fileWithUsers;
     vector <User> getUsers();
     User getNewUserData();
     int getNewUserId();
@@ -26,17 +26,18 @@ class UserMenager: public FileXml {
     void saveUserToFile(User user);
     void registerNewUser();
     void loggingUser();
+    void logOutUser();
 
 public:
-    int mainMenu();
     UserMenager(string FILENAMEWITHUSERS):  FileXml(FILENAMEWITHUSERS) {
-    users = getUsers();
+    fileWithUsers = getUsers();
     };
 
-
+    void mainMenu();
 
     void addUser();
 
+    int getIdLoggedUser();
 
 
 
@@ -44,7 +45,7 @@ public:
    // int loggingUser();
     //void wylogujUzytkownika();
     //void zmienHasloZalogowanegoUzytkownika();
-    int getIdLoggedUser();
+
     void displayAll();
 };
 #endif
