@@ -26,16 +26,14 @@ for ( int i = 0; i < incomes.size(); i++ ) {
 
 
 #include <iostream>
-#include "User.h"
-#include "UserMenager.h"
-#include "FileWithUsers.h"
+#include "HomeBudget.h"
+
 
 using namespace std;
 
 int main(){
-    FileWithUsers fileWithUsers("FileWithUsers.xml");
-    fileWithUsers.addUser();
-    fileWithUsers.displayAll();
+    HomeBudget homeBudget("FileWithUsers.xml", "fileWithIncomes.xml", "fileWithExpenses.xml");
+
 
     return 0;
 }

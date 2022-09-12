@@ -3,37 +3,49 @@
 
 #include <iostream>
 #include <vector>
-#include <windows.h>
 #include <fstream>
-#include <sstream>
+#include <cstdlib>
 
+#include "Markup.h"
+#include "FileXml.h"
 #include "User.h"
-#include "FileWithUsers.h"
 #include "AuxiliaryMethods.h"
 
 
 using namespace std;
 
-class UserMenager {
-    int idZalogowanegoUzytkownika;
-    vector <User> users;
-    FileWithUsers fileWithUsers;
+class UserMenager: public FileXml {
+    int lastUserId;
+    int idLoggedUser = 0;
 
-    User podajDaneNowegoUzytkownika();
-    int getNewIdForUser();
-    //bool czyIstniejeLogin(string login);
-
+    vector <User> fileWithUsers;
+    vector <User> getUsers();
+    User getNewUserData();
+    int getNewUserId();
+    bool checkUsernameAvailability(string login);
+    void saveUserToFile(User user);
+    void registerNewUser();
+    void loggingUser();
+    void logOutUser();
 
 public:
-    UserMenager(string FileNameWithUsers): fileWithUsers(FileNameWithUsers) {
-       // wczytajUzytkownikowZPliku();
+    UserMenager(string FILENAMEWITHUSERS):  FileXml(FILENAMEWITHUSERS) {
+    fileWithUsers = getUsers();
     };
 
-    //void rejestracjaUzytkownika();
+    void mainMenu();
+
+    void addUser();
+
+    int getIdLoggedUser();
+
+
+
     //void wczytajUzytkownikowZPliku();
-    //int logowanieUzytkownika();
+   // int loggingUser();
     //void wylogujUzytkownika();
     //void zmienHasloZalogowanegoUzytkownika();
-    //int pobierzIdZalogowanegoUzytkownika();
+
+    void displayAll();
 };
 #endif

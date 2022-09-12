@@ -1,15 +1,136 @@
 #include "UserMenager.h"
-/*
-void UserMenager::rejestracjaUzytkownika() {
-    Uzytkownik uzytkownik = podajDaneNowegoUzytkownika();
 
-    uzytkownicy.push_back(uzytkownik);
-    plikZUzytkownikami.dopiszUzytkownikaDoPliku(uzytkownik);
+void UserMenager::mainMenu() {
+    char choice;
+    while(idLoggedUser == 0) {
+        cin.sync();
+        system("cls");
+        cout<<"1- Log in"<<endl;
+        cout<<"2- Sing up"<<endl;
+        cout<<"0- Exit application"<<endl;
+        cout<<"====================="<<endl;
+        choice = AuxiliaryMethods::getChar();
 
-    cout << endl << "Konto zalozono pomyslnie" << endl << endl;
-    system("pause");
+        switch(choice) {
+        case '1': {
+            loggingUser();
+            break;
+        }
+        case '2': {
+            registerNewUser();
+            break;
+        }
+        case '0':
+            exit(0);
+        }
+    }
+};
+
+void UserMenager::loggingUser() {
+    cin.sync();
+    bool loginFound = false;
+    string login = "", password = "";
+
+    cout << endl << "Enter your login: ";
+    login = AuxiliaryMethods::getLine();
+
+    vector <User>::iterator itr = fileWithUsers.begin();
+    while (itr != fileWithUsers.end()) {
+        if (itr -> getLogin() == login) {
+            loginFound = true;
+            for (int trialsNumber = 3; trialsNumber > 0; trialsNumber--) {
+                cout<< "Trials remain: " << trialsNumber << endl << "Enter password: " ;
+                password = AuxiliaryMethods::getLine();
+                if (itr ->getPassword() == password) {
+                    idLoggedUser = itr->getUserId();
+                    cout << endl << "You logged in correctly." << endl << endl;
+                    system("pause");
+
+                    idLoggedUser = itr->getUserId();
+                    break;
+                }
+                if(trialsNumber == 1) {
+                    cout << "You entered 3 times wrong password." << endl;
+                    system("pause");
+                    break;
+                }
+            }
+            break;
+        }
+        itr++;
+    }
+    if(!loginFound) {
+        cout << "There is no user with entered login" << endl << endl;
+        system("pause");
+    }
 }
 
+void UserMenager::logOutUser(){
+    idLoggedUser = 0;
+}
+
+vector <User> UserMenager::getUsers() {
+    vector <User> fileWithUsers;
+
+    CMarkup xml;
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
+
+    xml.FindElem(); // ORDER element is root
+    xml.IntoElem(); // inside ORDER
+
+    while ( xml.FindElem("User") ) {
+        int userId;
+        string login;
+        string password;
+        string data;
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        userId = AuxiliaryMethods::converteStringToInt(data);
+        lastUserId = userId;
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        login = data;
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        password = data;
+
+        User user(userId,login,password);
+        fileWithUsers.push_back(user);
+    }
+    return fileWithUsers;
+};
+
+User UserMenager::getNewUserData() {
+    int userId;
+    string login;
+    string password;
+
+    bool isAvailable = false;
+
+    while(!isAvailable) {
+        cout<<"Set username: ";
+        cin>>login;
+        isAvailable = checkUsernameAvailability(login);
+        if(!isAvailable) cout<<"User name is already used. Try again."<<endl;
+    }
+
+    cout<<"Set password: ";
+    cin>>password;
+
+    userId = getNewUserId();
+    User newUser(userId,login,password);
+
+    return newUser;
+};
+/*
 User UserMenager::podajDaneNowegoUzytkownika() {
     User user;
     user.setUserId(getNewIdForUser());
@@ -27,12 +148,81 @@ User UserMenager::podajDaneNowegoUzytkownika() {
 
     return user;
 }
+*/
 
-int UserMenager::getNewIdForUser() {
-    if (users.empty() == true)
+int UserMenager::getIdLoggedUser() {
+    return idLoggedUser;
+}
+
+bool UserMenager::checkUsernameAvailability(string login) {
+    bool isAvailable = true;
+
+    for (auto x : fileWithUsers) if(x.getLogin() == login) {
+            isAvailable = false;
+            break;
+        }
+
+    return isAvailable;
+};
+
+int UserMenager::getNewUserId() {
+    if (fileWithUsers.empty() == true)
         return 1;
     else
-        return users.back().getUserId() + 1;
+        return ++lastUserId;
+}
+
+void UserMenager::saveUserToFile(User user) {
+    CMarkup xml;
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
+
+    xml.FindElem();
+    xml.IntoElem();
+    xml.AddElem("User");
+    xml.IntoElem();
+    xml.AddElem("UserId", user.getUserId());
+    xml.AddElem("UserLogin", user.getLogin());
+    xml.AddElem("Password", user.getPassword());
+
+    xml.Save(getFileName());
+    fileWithUsers.push_back(user);
+};
+
+void UserMenager::addUser() {
+    User newUser = getNewUserData();
+    saveUserToFile(newUser);
+};
+
+void UserMenager::displayAll() {
+    for(auto x:fileWithUsers ) cout<<"Id: "<<x.getUserId()<<endl<<"user name: "<<x.getLogin()<<endl<<"Password: "<<x.getPassword()<<endl<<"----------------------"<<endl;
+};
+
+
+
+
+void UserMenager::registerNewUser() {
+    User user = getNewUserData();
+
+    fileWithUsers.push_back(user);
+    saveUserToFile(user);
+
+    cout << endl << "Registration completed successfully" << endl << endl;
+    system("pause");
+}
+
+
+
+/*
+int UserMenager::getNewIdForUser() {
+    if (fileWithUsers.empty() == true)
+        return 1;
+    else
+        return fileWithUsers.back().getUserId() + 1;
 }
 
 bool UserMenager::czyIstniejeLogin(string login) {
@@ -48,46 +238,9 @@ bool UserMenager::czyIstniejeLogin(string login) {
 void UserMenager::wczytajUzytkownikowZPliku() {
     uzytkownicy = plikZUzytkownikami.wczytajUzytkownikowZPliku();
 }
+*/
 
-int UserMenager::logowanieUzytkownika() {
-    cin.sync();
-    bool znalezionoLogin = false;
-    string login = "", haslo = "";
-
-    cout << endl << "Podaj login: ";
-    login = metodyPomocnicze.wczytajLinie();
-    vector <Uzytkownik>::iterator itr = uzytkownicy.begin();
-    while (itr != uzytkownicy.end()) {
-        if (itr -> pobierzLogin() == login) {
-            znalezionoLogin = true;
-            for (int iloscProb = 3; iloscProb > 0; iloscProb--) {
-                cout << "Podaj haslo. Pozostalo prob: " << iloscProb << ": ";
-                haslo = metodyPomocnicze.wczytajLinie();
-                if (itr ->pobierzHaslo() == haslo) {
-                    idZalogowanegoUzytkownika = itr->pobierzId();
-                    cout << endl << "Zalogowales sie." << endl << endl;
-                    system("pause");
-
-                    return  itr->pobierzId();
-                }
-                if(iloscProb == 1) {
-                    cout << "Wprowadzono 3 razy bledne haslo." << endl;
-                    system("pause");
-                    break;
-                }
-            }
-            break;
-        }
-        itr++;
-    }
-    if(!znalezionoLogin) {
-        cout << "Nie ma uzytkownika z takim loginem" << endl << endl;
-        system("pause");
-
-        return 0;
-    }
-}
-
+/*
 void UserMenager::zmienHasloZalogowanegoUzytkownika() {
     MetodyPomocnicze metodyPomocnicze;
     cin.sync();
@@ -120,7 +273,4 @@ void UserMenager::wylogujUzytkownika() {
     idZalogowanegoUzytkownika = 0;
 }
 
-int UserMenager::pobierzIdZalogowanegoUzytkownika() {
-    return idZalogowanegoUzytkownika;
-}
 */
