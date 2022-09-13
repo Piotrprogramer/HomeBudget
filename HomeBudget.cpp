@@ -18,13 +18,13 @@ void HomeBudget::userMenu(){
     while(choice != '0'){
     cin.sync();
     system("cls");
-    cout<<"1- Dodaj przychod"<<endl;
-    cout<<"2- Dodaj wydatek"<<endl;
-    cout<<"3- Bilans z bieaccego miesiaca"<<endl;
-    cout<<"4- Bilans z poprzedniego miesiaca"<<endl;
-    cout<<"5- Bilans z wybranego okresu"<<endl;
-    cout<<"6- Zmien haslo"<<endl;
-    cout<<"0- Wyloguj sie"<<endl;
+    cout<<"1- Add income"<<endl;
+    cout<<"2- Add Expenses"<<endl;
+    cout<<"3- Balance sheet for the current month"<<endl;
+    cout<<"4- Balance sheet for the last  month"<<endl;
+    cout<<"5- Balance sheet for the set period time"<<endl;
+    cout<<"6- Change password"<<endl;
+    cout<<"0- Log out"<<endl;
     cout<<"====================="<<endl;
     choice = AuxiliaryMethods::getChar();
         switch(choice) {
