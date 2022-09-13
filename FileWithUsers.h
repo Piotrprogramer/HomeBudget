@@ -1,4 +1,4 @@
-#ifndef FILEWITHUSERS_H
+/*#ifndef FILEWITHUSERS_H
 #define FILEWITHUSERS_H
 
 #include <iostream>
@@ -32,3 +32,4 @@ public:
     void displayAll();
 };
 #endif
+*/

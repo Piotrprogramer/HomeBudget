@@ -31,8 +31,30 @@ for ( int i = 0; i < incomes.size(); i++ ) {
 
 using namespace std;
 
-int main(){
+int homeBudget_main(){
     HomeBudget homeBudget("FileWithUsers.xml", "fileWithIncomes.xml", "fileWithExpenses.xml");
+
+
+
+    return 0;
+}
+
+#include <iostream>
+#include "Calendar.h"
+
+
+#include <ctime>
+#include <iostream>
+
+
+
+using namespace std;
+
+int main(){
+    //Calendar calendar;
+    //tm date = calendar.getCurrentDate() ;
+   // date = calendar.getCurrentDate() ;
+    cout<< Calendar::getCurrentMonth()<<endl;
 
 
     return 0;

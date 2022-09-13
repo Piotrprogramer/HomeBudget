@@ -26,6 +26,7 @@ public:
         //startMenu();
         userMenu();
     };
+
     ~HomeBudget() {
         delete fileWithIncomes;
         fileWithIncomes = NULL;

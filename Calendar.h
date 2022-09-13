@@ -14,5 +14,6 @@ class Calendar {
 public:
     static bool isValidDate(int d, int m, int y);
     static tm getCurrentDate();
+    static int getCurrentMonth();
 };
 #endif

@@ -49,3 +49,9 @@ tm Calendar::getCurrentDate() {
 
     return *now;
 }
+
+int Calendar::getCurrentMonth(){
+    tm date = Calendar::getCurrentDate() ;
+
+    return date.tm_mon;
+}
