@@ -9,10 +9,12 @@ FileWithIncomes::FileWithIncomes(string name_of_file, int userId): FileXml(name_
         xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
         xml.AddElem(getFileName());
     }
+    allIncomes = getAllIncomes();
 };
 
 void FileWithIncomes::addIncome() {
     Income newIncome = getNewIncomeData();
+    allIncomes.push_back(newIncome);
     saveIncomeToFile(newIncome);
 };
 
@@ -77,7 +79,7 @@ void FileWithIncomes::saveIncomeToFile(Income income){
     xml.Save(getFileName());
 };
 
-vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
+vector <Income> FileWithIncomes::getIncomesOfDateRange(){
     vector <Income> incomes;
     string data;
 
@@ -141,6 +143,51 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
         Income income( userId, incomeReason, amount, year, month, day);
         incomes.push_back(income);
         };
+    }
+    return incomes;
+};
+
+vector <Income> FileWithIncomes::getAllIncomes(){
+    vector <Income> incomes;
+    string data;
+
+    double amount = 0;
+    string incomeReason = "";
+
+    CMarkup xml;
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
+
+    xml.FindElem(); // ORDER element is root
+    xml.IntoElem(); // inside ORDER
+
+    while ( xml.FindElem("Income") ) {
+
+        int year, month, day;
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        incomeReason = data;
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        amount = AuxiliaryMethods::converteStringToDouble(data);
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+
+        day = AuxiliaryMethods::getDate( data, 2);
+        month = AuxiliaryMethods::getDate( data, 1);
+        year = AuxiliaryMethods::getDate( data, 0);
+
+        Income income( userId, incomeReason, amount, year, month, day);
+        incomes.push_back(income);
     }
     return incomes;
 };

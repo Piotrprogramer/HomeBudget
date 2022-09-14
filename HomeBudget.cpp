@@ -13,20 +13,34 @@ void HomeBudget::loadIncomesAndExpenses(){
     fileWithExpenses = new FileWithExpenses(fileWithExpensesName,userMenager.getIdLoggedUser());
 };
 
-void HomeBudget::userMenu(){
-    char choice;
-    while(choice != '0'){
-    cin.sync();
-    system("cls");
-    cout<<"1- Add income"<<endl;
-    cout<<"2- Add Expenses"<<endl;
-    cout<<"3- Balance sheet for the current month"<<endl;
-    cout<<"4- Balance sheet for the last  month"<<endl;
-    cout<<"5- Balance sheet for the set period time"<<endl;
-    cout<<"6- Change password"<<endl;
-    cout<<"0- Log out"<<endl;
-    cout<<"====================="<<endl;
-    choice = AuxiliaryMethods::getChar();
+void HomeBudget::logOut(){
+    userMenager.logOutUser();
+    delete fileWithIncomes;
+    fileWithIncomes = NULL;
+    delete fileWithExpenses;
+    fileWithExpenses = NULL;
+
+    startMenu();
+};
+
+void HomeBudget::getBalanceOfSetPeriod(){
+
+};
+
+void HomeBudget::userMenu() {
+    char choice = 'x';
+    while(choice != 0) {
+        cin.sync();
+        system("cls");
+        cout<<"1- Add income"<<endl;
+        cout<<"2- Add Expenses"<<endl;
+        cout<<"3- Balance sheet for the current month"<<endl;
+        cout<<"4- Balance sheet for the last  month"<<endl;
+        cout<<"5- Balance sheet for the set period time"<<endl;
+        cout<<"6- Change password"<<endl;
+        cout<<"0- Log out"<<endl;
+        cout<<"====================="<<endl;
+        choice = AuxiliaryMethods::getChar();
         switch(choice) {
         case '1': {
             fileWithIncomes->addIncome();
@@ -41,19 +55,21 @@ void HomeBudget::userMenu(){
             break;
         }
         case '4': {
-           //4- Bilans z poprzedniego miesiaca"
+            //4- Bilans z poprzedniego miesiaca"
             break;
         }
         case '5': {
-           //5- Bilans z wybranego okresu
+            //5- Bilans z wybranego okresu
+            getBalanceOfSetPeriod();
             break;
         }
         case '6': {
             //<<"6- Zmien haslo
             break;
         }
-        case '0':{}
-           // 0- Wyloguj sie
+        case '0': {
+            logOut();
+        }
         }
     }
 };

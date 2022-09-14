@@ -26,12 +26,12 @@ class UserMenager: public FileXml {
     void saveUserToFile(User user);
     void registerNewUser();
     void loggingUser();
-    void logOutUser();
 
 public:
     UserMenager(string FILENAMEWITHUSERS):  FileXml(FILENAMEWITHUSERS) {
     fileWithUsers = getUsers();
     };
+    void logOutUser();
 
     void mainMenu();
 

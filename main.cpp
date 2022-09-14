@@ -11,7 +11,7 @@ int fileWithIncomes_main()
 {
     FileWithIncomes fileWithIncomes("fileWithIncomes.xml",707);
     vector <Income> incomes;
-    incomes = fileWithIncomes.getVectorWithIncomesOfDateRange();
+
 
 for ( int i = 0; i < incomes.size(); i++ ) {
      cout << incomes[ i ] .getDate()<<"    "<<incomes[ i ].getAmount()<<"   "<<incomes[i].getIncomeReason()<<endl;// = i;
@@ -31,8 +31,9 @@ for ( int i = 0; i < incomes.size(); i++ ) {
 
 using namespace std;
 
-int homeBudget_main(){
+int main(){
     HomeBudget homeBudget("FileWithUsers.xml", "fileWithIncomes.xml", "fileWithExpenses.xml");
+    //homeBudget.startMenu();
 
 
 
@@ -50,7 +51,7 @@ int homeBudget_main(){
 
 using namespace std;
 
-int main(){
+int Calendar_main(){
     //Calendar calendar;
     //tm date = calendar.getCurrentDate() ;
    // date = calendar.getCurrentDate() ;

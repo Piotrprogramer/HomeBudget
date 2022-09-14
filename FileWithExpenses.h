@@ -14,12 +14,14 @@ class FileWithExpenses: public FileXml {
     int userId;
     Expense getNewExpenseData();
     void saveExpenseToFile(Expense expense);
+    vector<Expense> allExpense;
 
 public:
     FileWithExpenses(string name_of_file, int userId);
     void addExpense();
-    vector <Expense> getVectorWithExpensesOfDateRange();
+    vector <Expense> getExpensesOfDateRange();
     string getExpense();
+    vector <Expense> getAllExpenses();
 
 };
 #endif

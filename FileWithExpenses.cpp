@@ -9,10 +9,12 @@ FileWithExpenses::FileWithExpenses(string name_of_file, int userId): FileXml(nam
         xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
         xml.AddElem(getFileName());
     }
+    allExpense = getAllExpenses();
 };
 
 void FileWithExpenses::addExpense() {
     Expense newExpense = getNewExpenseData();
+    allExpense.push_back(newExpense);
     saveExpenseToFile(newExpense);
 };
 
@@ -97,7 +99,7 @@ string FileWithExpenses::getExpense(){
     return amount;
 };
 
-vector <Expense> FileWithExpenses::getVectorWithExpensesOfDateRange(){
+vector <Expense> FileWithExpenses::getExpensesOfDateRange(){
     vector <Expense> expenses;
     string data ;
 
@@ -164,4 +166,48 @@ vector <Expense> FileWithExpenses::getVectorWithExpensesOfDateRange(){
     }
     return expenses;
 };
+
+vector <Expense> FileWithExpenses::getAllExpenses(){
+    vector <Expense> expenses;
+    string data ;
+
+    double amount = 0;
+    string expenseReason = "";
+
+    CMarkup xml;
+    bool fileExists = xml.Load( getFileName());
+
+    if (!fileExists) {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem(getFileName());
+    }
+
+    xml.FindElem(); // ORDER element is root
+    xml.IntoElem(); // inside ORDER
+
+    while ( xml.FindElem("Expense") ) {
+        int year, month, day;
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        expenseReason = data;
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        amount = AuxiliaryMethods::converteStringToDouble(data);
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+
+        day = AuxiliaryMethods::getDate( data, 2);
+        month = AuxiliaryMethods::getDate( data, 1);
+        year = AuxiliaryMethods::getDate( data, 0);
+
+        Expense expense( userId, expenseReason, amount, year, month, day);
+        expenses.push_back(expense);
+    }
+    return expenses;
+}
 

@@ -19,19 +19,13 @@ class HomeBudget {
     void startMenu();
     void userMenu();
     void loadIncomesAndExpenses();
+    void logOut();
+    void getBalanceOfSetPeriod();
 
 public:
     HomeBudget(string FILEWITHUSERS, string FILEWITHINCOMES, string FILEWITHEXPENSES)
         :userMenager(FILEWITHUSERS),  fileWithIncomesName(FILEWITHINCOMES),  fileWithExpensesName(FILEWITHEXPENSES) {
-        //startMenu();
-        userMenu();
-    };
-
-    ~HomeBudget() {
-        delete fileWithIncomes;
-        fileWithIncomes = NULL;
-        delete fileWithExpenses;
-        fileWithExpenses = NULL;
+        startMenu();
     };
 };
 
