@@ -14,12 +14,16 @@ class FileWithIncomes :public FileXml {
     int userId;
     Income getNewIncomeData();
     void saveIncomeToFile(Income income);
+    void displayIncome(Income income);
     vector <Income> allIncomes;
 
 public:
     FileWithIncomes(string name_of_file, int userId);
     void addIncome();
-    vector <Income> getIncomesOfDateRange();
+    vector <Income> getIncomesOfDateRange(int startYear , int startMonth, int startDay, int endYear, int endMonth, int endDay);
     vector <Income> getAllIncomes();
+    void showAllIncomes(vector <Income> incomes);
+    double getTotalIncomesAmount(vector <Income> incomes);
+
 };
 #endif

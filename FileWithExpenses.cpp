@@ -79,7 +79,7 @@ void FileWithExpenses::saveExpenseToFile(Expense Expense){
     xml.Save(getFileName());
 
 };
-
+/*
 string FileWithExpenses::getExpense(){
     string amount ;
     CMarkup xml;
@@ -98,17 +98,14 @@ string FileWithExpenses::getExpense(){
     }
     return amount;
 };
-
-vector <Expense> FileWithExpenses::getExpensesOfDateRange(){
+*/
+vector <Expense> FileWithExpenses::getExpensesOfDateRange(int startYear , int startMonth, int startDay, int endYear, int endMonth, int endDay){
     vector <Expense> expenses;
     string data ;
 
     double amount = 0;
     int year, month, day;
     string expenseReason = "";
-
-    int startYear , startMonth, startDay;
-    int endYear, endMonth, endDay;
 
     bool isValidDate = false;
 
@@ -122,22 +119,6 @@ vector <Expense> FileWithExpenses::getExpensesOfDateRange(){
 
     xml.FindElem(); // ORDER element is root
     xml.IntoElem(); // inside ORDER
-
-       cout<<"Set a balance period ( rrrr mm dd )"<<endl;
-       cout<<"Set a first date: ";
-       do{
-       cin >>startYear >>startMonth >>startDay;
-       isValidDate = Calendar::isValidDate(startDay,startMonth,startYear);
-       if(!isValidDate) cout<<"Incorrect date. Try again: ";
-       }while(!isValidDate);
-
-       cout<<"Set a last date: ";
-       do{
-       cin >>endYear >>endMonth >>endDay;
-
-       isValidDate = Calendar::isValidDate(endDay,endMonth,endYear);
-       if(!isValidDate) cout<<"Incorrect date. Try again: ";
-       }while(!isValidDate);
 
     while ( xml.FindElem("Expense") ) {
         int year, month, day;
@@ -171,6 +152,7 @@ vector <Expense> FileWithExpenses::getAllExpenses(){
     vector <Expense> expenses;
     string data ;
 
+    int logedUserId;
     double amount = 0;
     string expenseReason = "";
 
@@ -189,6 +171,7 @@ vector <Expense> FileWithExpenses::getAllExpenses(){
         int year, month, day;
         xml.FindChildElem(  );
         data = xml.GetChildData();
+        logedUserId = AuxiliaryMethods::converteStringToInt(data);
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
@@ -205,9 +188,32 @@ vector <Expense> FileWithExpenses::getAllExpenses(){
         month = AuxiliaryMethods::getDate( data, 1);
         year = AuxiliaryMethods::getDate( data, 0);
 
+        if(userId = logedUserId){
         Expense expense( userId, expenseReason, amount, year, month, day);
         expenses.push_back(expense);
+        }
     }
     return expenses;
 }
 
+void FileWithExpenses::displayExpenses(Expense expense){
+    cout<<expense.getDate()<<endl;
+    cout<<expense.getAmount()<<endl;
+    cout<<expense.getExpenseReason()<<endl;
+    cout<<"---------------"<<endl;
+};
+
+void FileWithExpenses::showAllExpences(vector <Expense> expenses){
+    cout<<"BALANCE SHEET OF EXPENSES"<<endl;
+    cout<<"==============="<<endl;
+    sort(expenses.begin(), expenses.end());
+    for(auto getedExpense : expenses)   displayExpenses(getedExpense);
+    cout<<endl;
+};
+
+double FileWithExpenses::getTotalExpensesAmount(vector <Expense> expenses){
+    double sum = 0;
+    for(auto getedExpense: expenses) sum += getedExpense.getAmount();
+
+    return sum;
+};

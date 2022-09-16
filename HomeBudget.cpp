@@ -23,8 +23,51 @@ void HomeBudget::logOut(){
     startMenu();
 };
 
-void HomeBudget::getBalanceOfSetPeriod(){
+void HomeBudget::getBalanceOfSetPeriod() {
+    //int startDay, startMonth, startYear;
+    //int endDay, endMonth, endYear;
+    int startDay = 15, startMonth=1, startYear=2010;
+    int endDay = 15, endMonth=1, endYear=2020;
 
+    double totalIncomeAmount = 0;
+    double totalExpensesAmount = 0;
+
+    bool isValidDate;
+
+    vector<Income> incomes;
+    vector<Expense> expenses;
+    /*
+    do {
+        cout<<"Date format:  rrrr mm dd";
+        cout<<endl<<"Give the start date: ";
+        cin>>startYear>>startMonth>>startDay;
+        isValidDate = Calendar::isValidDate(startDay,startMonth,startYear);
+        if(!isValidDate) cout<<"Incorrect date. Try again."<<endl<<endl;
+    } while(!isValidDate);
+
+    do {
+        cout<<"Date format:  rrrr mm dd";
+        cout<<endl<<"Give the end date: ";
+        cin>>endYear>>endMonth>>endDay;
+        isValidDate = Calendar::isValidDate(endDay,endMonth,endYear);
+        if(!isValidDate) cout<<"Incorrect date. Try again."<<endl<<endl;
+    } while(!isValidDate);
+    */
+    system("cls");
+    incomes = fileWithIncomes->getIncomesOfDateRange( startYear , startMonth, startDay, endYear, endMonth, endDay);
+    expenses = fileWithExpenses->getExpensesOfDateRange( startYear , startMonth, startDay, endYear, endMonth, endDay);
+
+    fileWithIncomes->showAllIncomes(incomes);
+    fileWithExpenses->showAllExpences(expenses);
+
+    totalIncomeAmount = fileWithIncomes->getTotalIncomesAmount(incomes);
+    totalExpensesAmount = fileWithExpenses->getTotalExpensesAmount(expenses);
+
+    cout<<"Total amount of incomes: "<<totalIncomeAmount<<endl;
+    cout<<"Total amount of expenses: "<<totalExpensesAmount<<endl;
+    cout<<"The ratio of income to expenses: "<< totalIncomeAmount - totalExpensesAmount<<endl<<endl;
+
+    system("pause");
 };
 
 void HomeBudget::userMenu() {
