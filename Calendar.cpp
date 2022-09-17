@@ -63,8 +63,3 @@ int  getNumberOfDays(int month, int year){
 		return 30;
 }
 
-int Calendar::getCurrentMonth(){
-    tm date = Calendar::getCurrentDate() ;
-
-    return date.tm_mon;
-}
