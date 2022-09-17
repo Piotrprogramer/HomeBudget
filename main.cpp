@@ -39,24 +39,3 @@ int main(){
 
     return 0;
 }
-
-#include <iostream>
-#include "Calendar.h"
-
-
-#include <ctime>
-#include <iostream>
-
-
-
-using namespace std;
-
-int Calendar_main(){
-    //Calendar calendar;
-    //tm date = calendar.getCurrentDate() ;
-   // date = calendar.getCurrentDate() ;
-    cout<< Calendar::getCurrentMonth()<<endl;
-
-
-    return 0;
-}

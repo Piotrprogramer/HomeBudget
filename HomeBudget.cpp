@@ -173,7 +173,8 @@ void HomeBudget::userMenu() {
             break;
         }
         case '6': {
-            //<<"6- Zmien haslo
+            userMenager.changePasswordLoggedUser();
+
             break;
         }
         case '0': {
