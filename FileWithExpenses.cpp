@@ -16,6 +16,9 @@ void FileWithExpenses::addExpense() {
     Expense newExpense = getNewExpenseData();
     allExpense.push_back(newExpense);
     saveExpenseToFile(newExpense);
+
+    cout<<"Expense added correctly "<<endl;
+    system("pause");
 };
 
 Expense FileWithExpenses::getNewExpenseData() {
@@ -99,50 +102,18 @@ string FileWithExpenses::getExpense(){
     return amount;
 };
 */
-vector <Expense> FileWithExpenses::getExpensesOfDateRange(int startYear , int startMonth, int startDay, int endYear, int endMonth, int endDay){
+
+vector <Expense> FileWithExpenses::getExpensesOfDateRange(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
     vector <Expense> expenses;
-    string data ;
-
-    double amount = 0;
     int year, month, day;
-    string expenseReason = "";
 
-    bool isValidDate = false;
+    for(auto checkingExpense: allExpense) {
+        year = checkingExpense.getYear();
+        month = checkingExpense.getMonth();
+        day = checkingExpense.getDay();
 
-    CMarkup xml;
-    bool fileExists = xml.Load( getFileName());
-
-    if (!fileExists) {
-        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-        xml.AddElem(getFileName());
-    }
-
-    xml.FindElem(); // ORDER element is root
-    xml.IntoElem(); // inside ORDER
-
-    while ( xml.FindElem("Expense") ) {
-        int year, month, day;
-        xml.FindChildElem(  );
-        data = xml.GetChildData();
-
-        xml.FindChildElem(  );
-        data = xml.GetChildData();
-        expenseReason = data;
-
-        xml.FindChildElem(  );
-        data = xml.GetChildData();
-        amount = AuxiliaryMethods::converteStringToDouble(data);
-
-        xml.FindChildElem(  );
-        data = xml.GetChildData();
-
-        day = AuxiliaryMethods::getDate( data, 2);
-        month = AuxiliaryMethods::getDate( data, 1);
-        year = AuxiliaryMethods::getDate( data, 0);
-
-        if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)){
-        Expense expense(userId,expenseReason,amount,year,month,day);
-        expenses.push_back(expense);
+        if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)) {
+            expenses.push_back(checkingExpense);
         };
     }
     return expenses;
@@ -198,7 +169,7 @@ vector <Expense> FileWithExpenses::getAllExpenses(){
 
 void FileWithExpenses::displayExpenses(Expense expense){
     cout<<expense.getDate()<<endl;
-    cout<<expense.getAmount()<<endl;
+    cout<<AuxiliaryMethods::converteDoubleToString(expense.getAmount())<<endl;
     cout<<expense.getExpenseReason()<<endl;
     cout<<"---------------"<<endl;
 };

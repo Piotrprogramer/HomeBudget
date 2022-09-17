@@ -23,11 +23,11 @@ void HomeBudget::logOut(){
     startMenu();
 };
 
-void HomeBudget::getBalanceOfSetPeriod() {
-    //int startDay, startMonth, startYear;
-    //int endDay, endMonth, endYear;
-    int startDay = 15, startMonth=1, startYear=2010;
-    int endDay = 15, endMonth=1, endYear=2020;
+void HomeBudget::getBalanceSheetOfCurrentMonth(){
+    tm date = Calendar::getCurrentDate();
+
+    int startMonth = date.tm_mon, startYear = date.tm_year;
+    int endMonth = date.tm_mon, endYear = date.tm_year;
 
     double totalIncomeAmount = 0;
     double totalExpensesAmount = 0;
@@ -36,7 +36,74 @@ void HomeBudget::getBalanceOfSetPeriod() {
 
     vector<Income> incomes;
     vector<Expense> expenses;
-    /*
+
+    system("cls");
+    incomes = fileWithIncomes->getIncomesOfDateRange( startYear , startMonth, 1, endYear, endMonth, 31);
+    expenses = fileWithExpenses->getExpensesOfDateRange( startYear , startMonth, 1, endYear, endMonth, 31);
+
+    fileWithIncomes->showAllIncomes(incomes);
+    fileWithExpenses->showAllExpences(expenses);
+
+    totalIncomeAmount = fileWithIncomes->getTotalIncomesAmount(incomes);
+    totalExpensesAmount = fileWithExpenses->getTotalExpensesAmount(expenses);
+
+    cout<<"Total amount of incomes: "<<AuxiliaryMethods::converteDoubleToString(totalIncomeAmount)<<endl;
+    cout<<"Total amount of expenses: "<<AuxiliaryMethods::converteDoubleToString(totalExpensesAmount)<<endl;
+    cout<<"The ratio of income to expenses: "<<  AuxiliaryMethods::converteDoubleToString(totalIncomeAmount - totalExpensesAmount)<<endl<<endl;
+
+    system("pause");
+};
+
+void HomeBudget::getBalanceSheetOfLastMonth(){
+    tm date = Calendar::getCurrentDate();
+
+    int startMonth = date.tm_mon - 1, startYear = date.tm_year;
+    int endMonth = date.tm_mon - 1, endYear = date.tm_year;
+
+    if(startMonth == 0){
+        startMonth = 12, startYear -= 1;
+        endMonth = 12, endYear -= 1;
+    }
+
+    double totalIncomeAmount = 0;
+    double totalExpensesAmount = 0;
+
+    bool isValidDate;
+
+    vector<Income> incomes;
+    vector<Expense> expenses;
+
+    system("cls");
+    incomes = fileWithIncomes->getIncomesOfDateRange( startYear , startMonth, 1, endYear, endMonth, 31);
+    expenses = fileWithExpenses->getExpensesOfDateRange( startYear , startMonth, 1, endYear, endMonth, 31);
+
+    fileWithIncomes->showAllIncomes(incomes);
+    fileWithExpenses->showAllExpences(expenses);
+
+    totalIncomeAmount = fileWithIncomes->getTotalIncomesAmount(incomes);
+    totalExpensesAmount = fileWithExpenses->getTotalExpensesAmount(expenses);
+
+    cout<<"Total amount of incomes: "<<AuxiliaryMethods::converteDoubleToString(totalIncomeAmount)<<endl;
+    cout<<"Total amount of expenses: "<<AuxiliaryMethods::converteDoubleToString(totalExpensesAmount)<<endl;
+    cout<<"The ratio of income to expenses: "<<  AuxiliaryMethods::converteDoubleToString(totalIncomeAmount - totalExpensesAmount)<<endl<<endl;
+
+    system("pause");
+};
+
+void HomeBudget::getBalanceSheetOfSetPeriod() {
+    int startDay, startMonth, startYear;
+    int endDay, endMonth, endYear;
+     //startDay = 15, startMonth=1, startYear=2000;
+     //endDay = 15, endMonth=1, endYear=3000;
+
+    double totalIncomeAmount = 0;
+    double totalExpensesAmount = 0;
+
+    bool isValidDate;
+
+    vector<Income> incomes;
+    vector<Expense> expenses;
+
     do {
         cout<<"Date format:  rrrr mm dd";
         cout<<endl<<"Give the start date: ";
@@ -52,7 +119,7 @@ void HomeBudget::getBalanceOfSetPeriod() {
         isValidDate = Calendar::isValidDate(endDay,endMonth,endYear);
         if(!isValidDate) cout<<"Incorrect date. Try again."<<endl<<endl;
     } while(!isValidDate);
-    */
+
     system("cls");
     incomes = fileWithIncomes->getIncomesOfDateRange( startYear , startMonth, startDay, endYear, endMonth, endDay);
     expenses = fileWithExpenses->getExpensesOfDateRange( startYear , startMonth, startDay, endYear, endMonth, endDay);
@@ -63,9 +130,9 @@ void HomeBudget::getBalanceOfSetPeriod() {
     totalIncomeAmount = fileWithIncomes->getTotalIncomesAmount(incomes);
     totalExpensesAmount = fileWithExpenses->getTotalExpensesAmount(expenses);
 
-    cout<<"Total amount of incomes: "<<totalIncomeAmount<<endl;
-    cout<<"Total amount of expenses: "<<totalExpensesAmount<<endl;
-    cout<<"The ratio of income to expenses: "<< totalIncomeAmount - totalExpensesAmount<<endl<<endl;
+    cout<<"Total amount of incomes: "<<AuxiliaryMethods::converteDoubleToString(totalIncomeAmount)<<endl;
+    cout<<"Total amount of expenses: "<<AuxiliaryMethods::converteDoubleToString(totalExpensesAmount)<<endl;
+    cout<<"The ratio of income to expenses: "<<  AuxiliaryMethods::converteDoubleToString(totalIncomeAmount - totalExpensesAmount)<<endl<<endl;
 
     system("pause");
 };
@@ -94,16 +161,15 @@ void HomeBudget::userMenu() {
             break;
         }
         case '3': {
-            //billans z biezacego misiaca
+            getBalanceSheetOfCurrentMonth();
             break;
         }
         case '4': {
-            //4- Bilans z poprzedniego miesiaca"
+            getBalanceSheetOfLastMonth();
             break;
         }
         case '5': {
-            //5- Bilans z wybranego okresu
-            getBalanceOfSetPeriod();
+            getBalanceSheetOfSetPeriod();
             break;
         }
         case '6': {

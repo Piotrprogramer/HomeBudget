@@ -1,6 +1,7 @@
 #ifndef HOMEBUDGET_H
 #define HOMEBUDGET_H
 
+#include "Calendar.h"
 #include "FileWithUsers.h"
 #include "FileWithIncomes.h"
 #include "FileWithExpenses.h"
@@ -20,7 +21,9 @@ class HomeBudget {
     void userMenu();
     void loadIncomesAndExpenses();
     void logOut();
-    void getBalanceOfSetPeriod();
+    void getBalanceSheetOfSetPeriod();
+    void getBalanceSheetOfCurrentMonth();
+    void getBalanceSheetOfLastMonth();
 
 public:
     HomeBudget(string FILEWITHUSERS, string FILEWITHINCOMES, string FILEWITHEXPENSES)

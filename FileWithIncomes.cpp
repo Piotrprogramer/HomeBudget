@@ -16,6 +16,9 @@ void FileWithIncomes::addIncome() {
     Income newIncome = getNewIncomeData();
     allIncomes.push_back(newIncome);
     saveIncomeToFile(newIncome);
+    cout<<"Income added correctly "<<endl;
+
+    system("pause");
 };
 
 Income FileWithIncomes::getNewIncomeData() {
@@ -79,51 +82,18 @@ void FileWithIncomes::saveIncomeToFile(Income income){
     xml.Save(getFileName());
 };
 
-vector <Income> FileWithIncomes::getIncomesOfDateRange(int startYear , int startMonth, int startDay, int endYear, int endMonth, int endDay){
+vector <Income> FileWithIncomes::getIncomesOfDateRange(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
     vector <Income> incomes;
-    string data;
-
-    double amount = 0;
     int year, month, day;
-    string incomeReason = "";
 
-    bool isValidDate = false;
+    for(auto checkingIncome: allIncomes) {
+        year = checkingIncome.getYear();
+        month = checkingIncome.getMonth();
+        day = checkingIncome.getDay();
 
-    CMarkup xml;
-    bool fileExists = xml.Load( getFileName());
 
-    if (!fileExists) {
-        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-        xml.AddElem(getFileName());
-    }
-
-    xml.FindElem(); // ORDER element is root
-    xml.IntoElem(); // inside ORDER
-
-    while ( xml.FindElem("Income") ) {
-
-        int year, month, day;
-        xml.FindChildElem(  );
-        data = xml.GetChildData();
-
-        xml.FindChildElem(  );
-        data = xml.GetChildData();
-        incomeReason = data;
-
-        xml.FindChildElem(  );
-        data = xml.GetChildData();
-        amount = AuxiliaryMethods::converteStringToDouble(data);
-
-        xml.FindChildElem(  );
-        data = xml.GetChildData();
-
-        day = AuxiliaryMethods::getDate( data, 2);
-        month = AuxiliaryMethods::getDate( data, 1);
-        year = AuxiliaryMethods::getDate( data, 0);
-
-        if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)){
-        Income income( userId, incomeReason, amount, year, month, day);
-        incomes.push_back(income);
+        if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)) {
+            incomes.push_back(checkingIncome);
         };
     }
     return incomes;
@@ -180,7 +150,7 @@ vector <Income> FileWithIncomes::getAllIncomes(){
 
 void FileWithIncomes::displayIncome(Income income){
     cout<<income.getDate()<<endl;
-    cout<<income.getAmount()<<endl;
+    cout<<AuxiliaryMethods::converteDoubleToString(income.getAmount())<<endl;
     cout<<income.getIncomeReason()<<endl;
     cout<<"---------------"<<endl;
 };
