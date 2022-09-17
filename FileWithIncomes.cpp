@@ -9,11 +9,16 @@ FileWithIncomes::FileWithIncomes(string name_of_file, int userId): FileXml(name_
         xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
         xml.AddElem(getFileName());
     }
+    allIncomes = getAllIncomes();
 };
 
 void FileWithIncomes::addIncome() {
     Income newIncome = getNewIncomeData();
+    allIncomes.push_back(newIncome);
     saveIncomeToFile(newIncome);
+    cout<<"Income added correctly "<<endl;
+
+    system("pause");
 };
 
 Income FileWithIncomes::getNewIncomeData() {
@@ -77,17 +82,30 @@ void FileWithIncomes::saveIncomeToFile(Income income){
     xml.Save(getFileName());
 };
 
-vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
+vector <Income> FileWithIncomes::getIncomesOfDateRange(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
+    vector <Income> incomes;
+    int year, month, day;
+
+    for(auto checkingIncome: allIncomes) {
+        year = checkingIncome.getYear();
+        month = checkingIncome.getMonth();
+        day = checkingIncome.getDay();
+
+
+        if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)) {
+            incomes.push_back(checkingIncome);
+        };
+    }
+    return incomes;
+};
+
+vector <Income> FileWithIncomes::getAllIncomes(){
     vector <Income> incomes;
     string data;
 
+    int logedUserId;
     double amount = 0;
-    int year, month, day;
     string incomeReason = "";
-
-    int startYear , startMonth, startDay;
-    int endYear, endMonth, endDay;
-    bool isValidDate = false;
 
     CMarkup xml;
     bool fileExists = xml.Load( getFileName());
@@ -100,27 +118,12 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
     xml.FindElem(); // ORDER element is root
     xml.IntoElem(); // inside ORDER
 
-       cout<<"Set a balance period ( rrrr mm dd )"<<endl;
-       cout<<"Set a first date: ";
-       do{
-       cin >>startYear >>startMonth >>startDay;
-       isValidDate = Calendar::isValidDate(startDay,startMonth,startYear);
-       if(!isValidDate) cout<<"Incorrect date. Try again: ";
-       }while(!isValidDate);
-
-       cout<<"Set a last date: ";
-       do{
-       cin >>endYear >>endMonth >>endDay;
-
-       isValidDate = Calendar::isValidDate(endDay,endMonth,endYear);
-       if(!isValidDate) cout<<"Incorrect date. Try again: ";
-       }while(!isValidDate);
-
     while ( xml.FindElem("Income") ) {
 
         int year, month, day;
         xml.FindChildElem(  );
         data = xml.GetChildData();
+        logedUserId = AuxiliaryMethods::converteStringToInt(data);
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
@@ -137,11 +140,32 @@ vector <Income> FileWithIncomes::getVectorWithIncomesOfDateRange(){
         month = AuxiliaryMethods::getDate( data, 1);
         year = AuxiliaryMethods::getDate( data, 0);
 
-        if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)){
+        if(userId = logedUserId){
         Income income( userId, incomeReason, amount, year, month, day);
         incomes.push_back(income);
-        };
+        }
     }
     return incomes;
 };
 
+void FileWithIncomes::displayIncome(Income income){
+    cout<<income.getDate()<<endl;
+    cout<<AuxiliaryMethods::converteDoubleToString(income.getAmount())<<endl;
+    cout<<income.getIncomeReason()<<endl;
+    cout<<"---------------"<<endl;
+};
+
+void FileWithIncomes::showAllIncomes(vector <Income> incomes){
+    sort(incomes.begin(), incomes.end());
+    cout<<"BALANCE SHEET OF INCOMES"<<endl;
+    cout<<"==============="<<endl;
+    for(auto getedIncome : incomes) displayIncome(getedIncome);
+    cout<<endl;
+};
+
+double FileWithIncomes::getTotalIncomesAmount(vector <Income> incomes){
+    double sum = 0;
+    for(auto getedIncome: incomes) sum += getedIncome.getAmount();
+
+    return sum;
+};
