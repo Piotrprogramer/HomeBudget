@@ -130,25 +130,6 @@ User UserMenager::getNewUserData() {
 
     return newUser;
 };
-/*
-User UserMenager::podajDaneNowegoUzytkownika() {
-    User user;
-    user.setUserId(getNewIdForUser());
-    string login;
-    do {
-        cout << endl << "Set login: ";
-        cin >> login;
-        user.setLogin(login);
-    } while (czyIstniejeLogin(user.pobierzLogin()) == true);
-
-    string password;
-    cout << "Set password: ";
-    cin >> password;
-    user.setPassword(password);
-
-    return user;
-}
-*/
 
 int UserMenager::getIdLoggedUser() {
     return idLoggedUser;
@@ -202,9 +183,6 @@ void UserMenager::displayAll() {
     for(auto x:fileWithUsers ) cout<<"Id: "<<x.getUserId()<<endl<<"user name: "<<x.getLogin()<<endl<<"Password: "<<x.getPassword()<<endl<<"----------------------"<<endl;
 };
 
-
-
-
 void UserMenager::registerNewUser() {
     User user = getNewUserData();
 
@@ -215,62 +193,61 @@ void UserMenager::registerNewUser() {
     system("pause");
 }
 
-
-
-/*
-int UserMenager::getNewIdForUser() {
-    if (fileWithUsers.empty() == true)
-        return 1;
-    else
-        return fileWithUsers.back().getUserId() + 1;
-}
-
-bool UserMenager::czyIstniejeLogin(string login) {
-    for(int i=0; i<uzytkownicy.size(); i++) {
-        if(uzytkownicy[i].pobierzLogin() == login ) {
-            cout << endl << "Istnieje uzytkownik o takim loginie." << endl;
-            return true;
-        }
-    }
-    return false;
-}
-
-void UserMenager::wczytajUzytkownikowZPliku() {
-    uzytkownicy = plikZUzytkownikami.wczytajUzytkownikowZPliku();
-}
-*/
-
-/*
-void UserMenager::zmienHasloZalogowanegoUzytkownika() {
-    MetodyPomocnicze metodyPomocnicze;
+void UserMenager::changePasswordLoggedUser() {
     cin.sync();
-    string haslo;
-    bool hasloPoprawnieZmienione=false;
-    cout<<endl<<"Podaj obecne haslo: ";
-    haslo = metodyPomocnicze.wczytajLinie();
+    vector<User> newFileWithUsers;
 
-    vector <Uzytkownik>::iterator itr = uzytkownicy.begin();
-    while (itr != uzytkownicy.end()) {
-        if(itr->pobierzHaslo() == haslo && itr->pobierzId() == idZalogowanegoUzytkownika) {
-            cout<<endl<<"Podaj nowe haslo: ";
-            haslo = metodyPomocnicze.wczytajLinie();
-            itr->ustawHaslo(haslo);
-            cout<<itr->pobierzLogin()<<endl;
-            cout<<"Haslo zmienione poprawnie "<<endl;
-            hasloPoprawnieZmienione = true;
-            plikZUzytkownikami.zapiszWszystkichUzytkownikowDoPliku(uzytkownicy);
-            system("pause");
+    string password;
+    bool passwordChangedCorrectly = false;
+    cout<<endl<<"Enter present password: ";
+    password = AuxiliaryMethods::getLine();
+
+    //vector <User>::iterator itr = fileWithUsers.begin();
+    //while (itr != fileWithUsers.end())
+    for(auto user: fileWithUsers){
+        if(user.getPassword() == password && user.getUserId() == idLoggedUser) {
+            cout<<endl<<"Enter new password: ";
+            password = AuxiliaryMethods::getLine();
+
+                //system("pause");
+            //user.setPassword(password);
+                // system("pause");
+            //cout<<user.getLogin()<<endl;
+                // system("pause");
+            User newPasswordUser(user.getUserId(), user.getLogin(), password);
+            newFileWithUsers.push_back(newPasswordUser);
+            passwordChangedCorrectly = true;
         }
-        itr++;
+        else newFileWithUsers.push_back(user);
     }
-    if(!hasloPoprawnieZmienione) {
-        cout<<endl<<"Podales nieprawidlowe obecne haslo "<<endl;
+    if(!passwordChangedCorrectly) {
+        cout<<endl<<"You entered incorrect current password"<<endl;
+        system("pause");
+    }
+    else {
+        fileWithUsers.clear();
+        fileWithUsers = newFileWithUsers;
+        saveAllUsersToFile();
+        cout<<"Password changed correctly "<<endl;
         system("pause");
     }
 }
 
-void UserMenager::wylogujUzytkownika() {
-    idZalogowanegoUzytkownika = 0;
-}
+void UserMenager::saveAllUsersToFile() {
+    CMarkup xml;
+    xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+    xml.AddElem(getFileName());
 
-*/
+    for(auto user: fileWithUsers){
+    xml.FindElem();
+    xml.IntoElem();
+    xml.AddElem("User");
+    xml.IntoElem();
+    xml.AddElem("UserId", user.getUserId());
+    xml.AddElem("UserLogin", user.getLogin());
+    xml.AddElem("Password", user.getPassword());
+    xml.OutOfElem();
+    xml.OutOfElem();
+    }
+    xml.Save(getFileName());
+};

@@ -24,6 +24,7 @@ class UserMenager: public FileXml {
     int getNewUserId();
     bool checkUsernameAvailability(string login);
     void saveUserToFile(User user);
+    void saveAllUsersToFile();
     void registerNewUser();
     void loggingUser();
 
@@ -31,14 +32,12 @@ public:
     UserMenager(string FILENAMEWITHUSERS):  FileXml(FILENAMEWITHUSERS) {
     fileWithUsers = getUsers();
     };
-    void logOutUser();
 
     void mainMenu();
-
     void addUser();
-
     int getIdLoggedUser();
-
+    void changePasswordLoggedUser();
+    void logOutUser();
 
 
     //void wczytajUzytkownikowZPliku();
