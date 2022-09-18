@@ -81,26 +81,6 @@ void FileWithExpenses::saveExpenseToFile(Expense Expense){
     xml.Save(getFileName());
 
 };
-/*
-string FileWithExpenses::getExpense(){
-    string amount ;
-    CMarkup xml;
-    bool fileExists = xml.Load( getFileName());
-
-    if (!fileExists) {
-        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-        xml.AddElem(getFileName());
-    }
-    xml.FindElem(); // ORDER element is root
-    xml.IntoElem(); // inside ORDER
-    while ( xml.FindElem("Expense") ) {
-        xml.FindChildElem( "Amount" );
-        amount = xml.GetChildData();
-            cout<<amount<<endl;
-    }
-    return amount;
-};
-*/
 
 vector <Expense> FileWithExpenses::getExpensesOfDateRange(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
     vector <Expense> expenses;

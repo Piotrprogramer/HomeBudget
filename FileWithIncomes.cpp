@@ -2,7 +2,6 @@
 
 FileWithIncomes::FileWithIncomes(string name_of_file, int USERID): userId(USERID), FileXml(name_of_file) {
     CMarkup xml;
-    //this->userId = userId;
     bool fileExists = xml.Load( getFileName());
 
     if (!fileExists) {
@@ -15,11 +14,8 @@ FileWithIncomes::FileWithIncomes(string name_of_file, int USERID): userId(USERID
 void FileWithIncomes::addIncome() {
     Income newIncome = getNewIncomeData();
     allIncomes.push_back(newIncome);
-
-
     saveIncomeToFile(newIncome);
     cout<<"Income added correctly "<<endl;
-
     system("pause");
 };
 
@@ -59,10 +55,6 @@ Income FileWithIncomes::getNewIncomeData() {
     cout<< "Enter the amount of income: ";
 
     amount = AuxiliaryMethods::getDoubleTypeOfNumber();
-    cout<<"FileWithIncomes::getNewIncomeData() {"<<endl;
-    cout<<userId<<endl;
-    system("pause");
-
     Income newIncome(userId,incomeReason, amount, year, month, day );
 
     return newIncome;
@@ -97,7 +89,6 @@ vector <Income> FileWithIncomes::getIncomesOfDateRange(int startYear, int startM
         year = checkingIncome.getYear();
         month = checkingIncome.getMonth();
         day = checkingIncome.getDay();
-
 
         if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)) {
             incomes.push_back(checkingIncome);
