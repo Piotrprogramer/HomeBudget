@@ -93,8 +93,6 @@ void HomeBudget::getBalanceSheetOfLastMonth(){
 void HomeBudget::getBalanceSheetOfSetPeriod() {
     int startDay, startMonth, startYear;
     int endDay, endMonth, endYear;
-     //startDay = 15, startMonth=1, startYear=2000;
-     //endDay = 15, endMonth=1, endYear=3000;
 
     double totalIncomeAmount = 0;
     double totalExpensesAmount = 0;

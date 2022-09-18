@@ -11,17 +11,16 @@
 using namespace std;
 
 class FileWithExpenses: public FileXml {
-    int userId;
+    const int userId;
     Expense getNewExpenseData();
     void saveExpenseToFile(Expense expense);
     void displayExpenses(Expense expense);
     vector<Expense> allExpense;
 
 public:
-    FileWithExpenses(string name_of_file, int userId);
+    FileWithExpenses(string name_of_file, int USERID);
     void addExpense();
     vector <Expense> getExpensesOfDateRange(int startYear , int startMonth, int startDay, int endYear, int endMonth, int endDay);
-   // string getExpense();
     vector <Expense> getAllExpenses();
     void showAllExpences(vector <Expense> expenses);
     double getTotalExpensesAmount(vector <Expense> expenses);

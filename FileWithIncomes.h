@@ -11,14 +11,14 @@
 using namespace std;
 
 class FileWithIncomes :public FileXml {
-    int userId;
+    const int userId;
     Income getNewIncomeData();
     void saveIncomeToFile(Income income);
     void displayIncome(Income income);
     vector <Income> allIncomes;
 
 public:
-    FileWithIncomes(string name_of_file, int userId);
+    FileWithIncomes(string name_of_file, int USERID);
     void addIncome();
     vector <Income> getIncomesOfDateRange(int startYear , int startMonth, int startDay, int endYear, int endMonth, int endDay);
     vector <Income> getAllIncomes();

@@ -1,8 +1,7 @@
 #include "FileWithExpenses.h"
 
-FileWithExpenses::FileWithExpenses(string name_of_file, int userId): FileXml(name_of_file) {
+FileWithExpenses::FileWithExpenses(string name_of_file, int USERID): userId(USERID), FileXml(name_of_file) {
     CMarkup xml;
-    this->userId = userId;
     bool fileExists = xml.Load( getFileName());
 
     if (!fileExists) {
@@ -159,7 +158,7 @@ vector <Expense> FileWithExpenses::getAllExpenses(){
         month = AuxiliaryMethods::getDate( data, 1);
         year = AuxiliaryMethods::getDate( data, 0);
 
-        if(userId = logedUserId){
+        if(userId == logedUserId){
         Expense expense( userId, expenseReason, amount, year, month, day);
         expenses.push_back(expense);
         }

@@ -24,8 +24,5 @@ class AuxiliaryMethods{
     static double converteStringToDouble(string number);
     static char getChar();
     static bool isDateInRange(int day, int month, int year, int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear);
-
-    //static int wczytajLiczbeCalkowita();
-    //static string zamienPierwszaLitereNaDuzaAPozostaleNaMale(string tekst);
 };
 #endif

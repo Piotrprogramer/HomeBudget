@@ -32,9 +32,6 @@ public:
     void setAmount(double income);
     void setDate(int year, int month, int day);
     void setExpenseReason(string expenseReason);
-
-    void display();
-
 };
 #endif
 

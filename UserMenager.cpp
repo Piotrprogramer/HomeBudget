@@ -45,8 +45,6 @@ void UserMenager::loggingUser() {
                     idLoggedUser = itr->getUserId();
                     cout << endl << "You logged in correctly." << endl << endl;
                     system("pause");
-
-                    idLoggedUser = itr->getUserId();
                     break;
                 }
                 if(trialsNumber == 1) {
@@ -88,6 +86,8 @@ vector <User> UserMenager::getUsers() {
         string login;
         string password;
         string data;
+        string userName;
+        string lastName;
 
         xml.FindChildElem(  );
         data = xml.GetChildData();
@@ -102,7 +102,15 @@ vector <User> UserMenager::getUsers() {
         data = xml.GetChildData();
         password = data;
 
-        User user(userId,login,password);
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        userName = data;
+
+        xml.FindChildElem(  );
+        data = xml.GetChildData();
+        lastName = data;
+
+        User user(userId,login,password, userName, lastName);
         fileWithUsers.push_back(user);
     }
     return fileWithUsers;
@@ -112,21 +120,27 @@ User UserMenager::getNewUserData() {
     int userId;
     string login;
     string password;
-
+    string userName;
+    string lastName;
     bool isAvailable = false;
 
+    cout<<"Set user name: ";
+    cin>>userName;
+    cout<<"Set last name: ";
+    cin>>lastName;
+
     while(!isAvailable) {
-        cout<<"Set username: ";
+        cout<<"Set login: ";
         cin>>login;
         isAvailable = checkUsernameAvailability(login);
-        if(!isAvailable) cout<<"User name is already used. Try again."<<endl;
+        if(!isAvailable) cout<<"User login is already used. Try again."<<endl;
     }
 
     cout<<"Set password: ";
     cin>>password;
 
     userId = getNewUserId();
-    User newUser(userId,login,password);
+    User newUser(userId,login,password, userName, lastName);
 
     return newUser;
 };
@@ -169,6 +183,8 @@ void UserMenager::saveUserToFile(User user) {
     xml.AddElem("UserId", user.getUserId());
     xml.AddElem("UserLogin", user.getLogin());
     xml.AddElem("Password", user.getPassword());
+    xml.AddElem("UserName", user.getUserName());
+    xml.AddElem("LastName", user.getLastName());
 
     xml.Save(getFileName());
     fileWithUsers.push_back(user);
@@ -179,14 +195,8 @@ void UserMenager::addUser() {
     saveUserToFile(newUser);
 };
 
-void UserMenager::displayAll() {
-    for(auto x:fileWithUsers ) cout<<"Id: "<<x.getUserId()<<endl<<"user name: "<<x.getLogin()<<endl<<"Password: "<<x.getPassword()<<endl<<"----------------------"<<endl;
-};
-
 void UserMenager::registerNewUser() {
     User user = getNewUserData();
-
-    fileWithUsers.push_back(user);
     saveUserToFile(user);
 
     cout << endl << "Registration completed successfully" << endl << endl;
@@ -202,23 +212,14 @@ void UserMenager::changePasswordLoggedUser() {
     cout<<endl<<"Enter present password: ";
     password = AuxiliaryMethods::getLine();
 
-    //vector <User>::iterator itr = fileWithUsers.begin();
-    //while (itr != fileWithUsers.end())
     for(auto user: fileWithUsers){
         if(user.getPassword() == password && user.getUserId() == idLoggedUser) {
             cout<<endl<<"Enter new password: ";
             password = AuxiliaryMethods::getLine();
-
-                //system("pause");
-            //user.setPassword(password);
-                // system("pause");
-            //cout<<user.getLogin()<<endl;
-                // system("pause");
-            User newPasswordUser(user.getUserId(), user.getLogin(), password);
-            newFileWithUsers.push_back(newPasswordUser);
+            user.setPassword(password);
             passwordChangedCorrectly = true;
         }
-        else newFileWithUsers.push_back(user);
+        newFileWithUsers.push_back(user);
     }
     if(!passwordChangedCorrectly) {
         cout<<endl<<"You entered incorrect current password"<<endl;
@@ -246,6 +247,8 @@ void UserMenager::saveAllUsersToFile() {
     xml.AddElem("UserId", user.getUserId());
     xml.AddElem("UserLogin", user.getLogin());
     xml.AddElem("Password", user.getPassword());
+    xml.AddElem("UserName", user.getUserName());
+    xml.AddElem("LastName", user.getLastName());
     xml.OutOfElem();
     xml.OutOfElem();
     }

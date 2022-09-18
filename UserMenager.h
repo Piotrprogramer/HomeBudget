@@ -38,13 +38,5 @@ public:
     int getIdLoggedUser();
     void changePasswordLoggedUser();
     void logOutUser();
-
-
-    //void wczytajUzytkownikowZPliku();
-   // int loggingUser();
-    //void wylogujUzytkownika();
-    //void zmienHasloZalogowanegoUzytkownika();
-
-    void displayAll();
 };
 #endif
