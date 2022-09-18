@@ -114,29 +114,3 @@ bool AuxiliaryMethods::isDateInRange(int day, int month, int year, int startDay,
         return false;
     }
 }
-/*
-int AuxiliaryMethods::wczytajLiczbeCalkowita() {
-    string wejscie = "";
-    int liczba = 0;
-
-    while (true) {
-        getline(cin, wejscie);
-
-        stringstream myStream(wejscie);
-        if (myStream >> liczba)
-            break;
-        cout << "To nie jest liczba. Wpisz ponownie. " << endl;
-    }
-
-    return liczba;
-}
-
-string AuxiliaryMethods::zamienPierwszaLitereNaDuzaAPozostaleNaMale(string tekst) {
-    if (!tekst.empty()) {
-        transform(tekst.begin(), tekst.end(), tekst.begin(), ::tolower);
-        tekst[0] = toupper(tekst[0]);
-    }
-
-    return tekst;
-}
-*/

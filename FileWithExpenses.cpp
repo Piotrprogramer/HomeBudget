@@ -1,8 +1,7 @@
 #include "FileWithExpenses.h"
 
-FileWithExpenses::FileWithExpenses(string name_of_file, int userId): FileXml(name_of_file) {
+FileWithExpenses::FileWithExpenses(string name_of_file, int USERID): userId(USERID), FileXml(name_of_file) {
     CMarkup xml;
-    this->userId = userId;
     bool fileExists = xml.Load( getFileName());
 
     if (!fileExists) {
@@ -82,26 +81,6 @@ void FileWithExpenses::saveExpenseToFile(Expense Expense){
     xml.Save(getFileName());
 
 };
-/*
-string FileWithExpenses::getExpense(){
-    string amount ;
-    CMarkup xml;
-    bool fileExists = xml.Load( getFileName());
-
-    if (!fileExists) {
-        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-        xml.AddElem(getFileName());
-    }
-    xml.FindElem(); // ORDER element is root
-    xml.IntoElem(); // inside ORDER
-    while ( xml.FindElem("Expense") ) {
-        xml.FindChildElem( "Amount" );
-        amount = xml.GetChildData();
-            cout<<amount<<endl;
-    }
-    return amount;
-};
-*/
 
 vector <Expense> FileWithExpenses::getExpensesOfDateRange(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
     vector <Expense> expenses;
@@ -159,7 +138,7 @@ vector <Expense> FileWithExpenses::getAllExpenses(){
         month = AuxiliaryMethods::getDate( data, 1);
         year = AuxiliaryMethods::getDate( data, 0);
 
-        if(userId = logedUserId){
+        if(userId == logedUserId){
         Expense expense( userId, expenseReason, amount, year, month, day);
         expenses.push_back(expense);
         }

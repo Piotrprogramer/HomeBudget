@@ -1,8 +1,7 @@
 #include "FileWithIncomes.h"
 
-FileWithIncomes::FileWithIncomes(string name_of_file, int userId): FileXml(name_of_file) {
+FileWithIncomes::FileWithIncomes(string name_of_file, int USERID): userId(USERID), FileXml(name_of_file) {
     CMarkup xml;
-    this->userId = userId;
     bool fileExists = xml.Load( getFileName());
 
     if (!fileExists) {
@@ -17,7 +16,6 @@ void FileWithIncomes::addIncome() {
     allIncomes.push_back(newIncome);
     saveIncomeToFile(newIncome);
     cout<<"Income added correctly "<<endl;
-
     system("pause");
 };
 
@@ -55,6 +53,7 @@ Income FileWithIncomes::getNewIncomeData() {
     incomeReason = AuxiliaryMethods::getLine();
 
     cout<< "Enter the amount of income: ";
+
     amount = AuxiliaryMethods::getDoubleTypeOfNumber();
     Income newIncome(userId,incomeReason, amount, year, month, day );
 
@@ -90,7 +89,6 @@ vector <Income> FileWithIncomes::getIncomesOfDateRange(int startYear, int startM
         year = checkingIncome.getYear();
         month = checkingIncome.getMonth();
         day = checkingIncome.getDay();
-
 
         if(AuxiliaryMethods::isDateInRange( day, month, year, startDay, startMonth, startYear, endDay, endMonth, endYear)) {
             incomes.push_back(checkingIncome);
@@ -140,7 +138,7 @@ vector <Income> FileWithIncomes::getAllIncomes(){
         month = AuxiliaryMethods::getDate( data, 1);
         year = AuxiliaryMethods::getDate( data, 0);
 
-        if(userId = logedUserId){
+        if(userId == logedUserId){
         Income income( userId, incomeReason, amount, year, month, day);
         incomes.push_back(income);
         }

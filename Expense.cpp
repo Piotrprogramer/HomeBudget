@@ -51,8 +51,3 @@ void Expense::setDate(int year, int month, int day) {
 void Expense::setExpenseReason(string expenseReason){
     this->expenseReason = expenseReason;
 }
-
-void Expense::display() {
-    cout<<"Kwota: "<< amount << "PLN  - " <<endl<<"Data: "<<year << "/" << month << "/" << day <<endl;
-    cout<<"Powod: " <<expenseReason<<endl;
-}

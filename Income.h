@@ -5,7 +5,6 @@
 #include <time.h>
 #include "AuxiliaryMethods.h"
 
-
 using namespace std;
 
 class Income {
@@ -33,7 +32,5 @@ public:
     void setAmount(double amount);
     void setDate(int year, int month, int day);
     void setIncomeReason(string incomeReason);
-
-    void display();
 };
 #endif
