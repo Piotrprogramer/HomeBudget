@@ -2,7 +2,6 @@
 #define HOMEBUDGET_H
 
 #include "Calendar.h"
-#include "FileWithUsers.h"
 #include "FileWithIncomes.h"
 #include "FileWithExpenses.h"
 #include "UserMenager.h"
