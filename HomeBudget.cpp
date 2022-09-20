@@ -32,8 +32,6 @@ void HomeBudget::getBalanceSheetOfCurrentMonth(){
     double totalIncomeAmount = 0;
     double totalExpensesAmount = 0;
 
-    bool isValidDate;
-
     vector<Income> incomes;
     vector<Expense> expenses;
 
@@ -67,8 +65,6 @@ void HomeBudget::getBalanceSheetOfLastMonth(){
 
     double totalIncomeAmount = 0;
     double totalExpensesAmount = 0;
-
-    bool isValidDate;
 
     vector<Income> incomes;
     vector<Expense> expenses;
@@ -105,7 +101,13 @@ void HomeBudget::getBalanceSheetOfSetPeriod() {
     do {
         cout<<"Date format:  rrrr mm dd";
         cout<<endl<<"Give the start date: ";
-        cin>>startYear>>startMonth>>startDay;
+
+        string data = AuxiliaryMethods::getLine();
+
+        startYear = AuxiliaryMethods::getDate( data, 0);
+        startMonth = AuxiliaryMethods::getDate( data, 1);
+        startDay = AuxiliaryMethods::getDate( data, 2);
+
         isValidDate = Calendar::isValidDate(startDay,startMonth,startYear);
         if(!isValidDate) cout<<"Incorrect date. Try again."<<endl<<endl;
     } while(!isValidDate);
@@ -113,7 +115,13 @@ void HomeBudget::getBalanceSheetOfSetPeriod() {
     do {
         cout<<"Date format:  rrrr mm dd";
         cout<<endl<<"Give the end date: ";
-        cin>>endYear>>endMonth>>endDay;
+
+        string data = AuxiliaryMethods::getLine();
+
+        endYear = AuxiliaryMethods::getDate( data, 0);
+        endMonth = AuxiliaryMethods::getDate( data, 1);
+        endDay = AuxiliaryMethods::getDate( data, 2);
+
         isValidDate = Calendar::isValidDate(endDay,endMonth,endYear);
         if(!isValidDate) cout<<"Incorrect date. Try again."<<endl<<endl;
     } while(!isValidDate);

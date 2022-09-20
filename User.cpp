@@ -19,18 +19,18 @@ string User::getLastName(){
     return lastName;
 };
 
-string User::setLogin(string login) {
+void User::setLogin(string login) {
     this->login = login;
 }
 
-string User::setPassword(string password) {
+void User::setPassword(string password) {
     this->password = password;
 }
 
-string User::setUserName(string userName){
+void User::setUserName(string userName){
     this->userName = userName;
 };
 
-string User::setLastName(string lastName){
+void User::setLastName(string lastName){
     this->lastName = lastName;
 };

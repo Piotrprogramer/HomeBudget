@@ -27,10 +27,10 @@ string getPassword();
 string getUserName();
 string getLastName();
 
-string setLogin(string login);
-string setPassword(string password);
-string setUserName(string userName);
-string setLastName(string lastName);
+void setLogin(string login);
+void setPassword(string password);
+void setUserName(string userName);
+void setLastName(string lastName);
 
 };
 #endif
